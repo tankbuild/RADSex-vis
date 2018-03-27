@@ -1,11 +1,16 @@
 Package: radsexvis
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Visualization of results from the RADSex pipeline
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Romain Feron
+Maintainer: Romain Feron <romain.feron.91@gmail.com>
+Author@R: person("Romain", "Feron", email = "romain.feron.91@gmail.com", 
+  role = c("aut", "cre"))
+Description: This package is part of the RADSex pipeline, which analyzes RAD-Sequencing data for sex-determination.
+    It offers functions to visualize the pipeline's results in a simple and consistent way.
+License: GPL-3
 Encoding: UTF-8
-LazyData: true
+LazyData: false
+Imports:
+URL: https://github.com/INRA-LPGP/radsex-vis
+BugReports: https://github.com/INRA-LPGP/radsex-vis/issues

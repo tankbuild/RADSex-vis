@@ -13,7 +13,7 @@ load_sex_distribution_table(input_file_path)
 A list object containing the data, number of males, and number of females.
 }
 \description{
-Loads a table of distribution of sequences between sexes obtained with RADSex sex_distribution.
+Load a table of distribution of sequences between sexes obtained with RADSex sex_distribution.
 }
 \examples{
 data = load_sex_distribution_table(input_file_path)

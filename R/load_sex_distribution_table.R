@@ -1,6 +1,6 @@
 #' @title Sex distribution table loader
 #'
-#' @description Loads a table of distribution of sequences between sexes obtained with RADSex sex_distribution.
+#' @description Load a table of distribution of sequences between sexes obtained with RADSex sex_distribution.
 #'
 #' @param input_file_path Path to a table of distribution of sequences between sexes.
 #'

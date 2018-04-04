@@ -44,13 +44,15 @@ Plot the heatmap of distribution of sequences between sexes from a table generat
 }
 \examples{
 # No autoscale: the plot dimensions are specified with "width" and "height".
-heatmap = sex_distribution_heatmap(input_file_path, output_file_path='heatmap.png', title="Distribution of sequences between sexes",
+heatmap = sex_distribution_heatmap(input_file_path, output_file_path='heatmap.png',
+                                   title="Distribution of sequences between sexes",
                                    width=10, height=10, dpi=200,
                                    significance.color="gold", significance.threshold=0.05,
                                    color.scale.bins=c(0, 10, 100, 1000),
                                    color.scale.colors=c("white", "grey10"))
 
 # Autoscale: the plot dimensions are automatically calculated from "width".
-heatmap = sex_distribution_heatmap(input_file_path, output_file_path='heatmap.png', title="Distribution of sequences between sexes",
+heatmap = sex_distribution_heatmap(input_file_path, output_file_path='heatmap.png',
+                                   title="Distribution of sequences between sexes",
                                    width=10, autoscale=TRUE)
 }

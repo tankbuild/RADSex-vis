@@ -48,14 +48,14 @@ coverage_clustering <- function(data,
     data[,-1] <- coverage
 
     # Cluster individuals
-    distances <- dist(t(coverage), method=distance.method)
-    individual_clusters <- hclust(distances, method=clustering.method)
+    distances <- dist(t(coverage), method = distance.method)
+    individual_clusters <- hclust(distances, method = clustering.method)
     data <- data[, c(1, individual_clusters$order + 1)]
     individuals <- individual_clusters$labels[individual_clusters$order]
 
     # Cluster distances
-    distances <- dist(coverage, method=distance.method)
-    sequence_clusters <- hclust(distances, method=clustering.method)
+    distances <- dist(coverage, method = distance.method)
+    sequence_clusters <- hclust(distances, method = clustering.method)
     data <- data[sequence_clusters$order,]
     sequences <- sequence_clusters$labels[sequence_clusters$order]
 
@@ -65,9 +65,9 @@ coverage_clustering <- function(data,
     melted$individual <- factor(as.character(melted$individual), levels = individuals)
 
     # Compute quantiles for color scale
-    distribution <- summary(replace(melted$coverage, which(melted$coverage==0), NA), na.rm=TRUE)
+    distribution <- summary(replace(melted$coverage, which(melted$coverage == 0), NA), na.rm=TRUE)
 
-    output <- list(data=melted, individuals=individual_clusters, sequences=sequence_clusters, distribution=distribution)
+    output <- list(data = melted, individuals = individual_clusters, sequences = sequence_clusters, distribution = distribution)
 
     return(output)
 }

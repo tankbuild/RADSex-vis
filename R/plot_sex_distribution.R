@@ -67,7 +67,7 @@ plot_sex_distribution <- function(input_file_path, output_file_path=NULL, title=
     }
 
     if (!is.null(output_file_path)) {
-        ggsave(output_file_path, plot=heatmap, width=width, height=height, dpi=dpi)
+        ggplot2::ggsave(output_file_path, plot=heatmap, width=width, height=height, dpi=dpi)
     } else {
         print(heatmap)
     }

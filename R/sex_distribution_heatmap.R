@@ -30,9 +30,9 @@ sex_distribution_heatmap <- function(data,  title=NULL,
                                      show.significance=TRUE, significance.color="red3", significance.threshold=0.05,
                                      color.scale.bins=c(0, 1, 5, 25, 100, 1000), color.scale.colors=c("white", "navyblue")) {
 
-    # Ignore warnings
-    options(warn = -1)
-    options("getSymbols.warning4.0" = FALSE)
+    # # Ignore warnings
+    # options(warn = -1)
+    # options("getSymbols.warning4.0" = FALSE)
 
     # Check that parameters were input correctly
     if (length(color.scale.bins) < 2) {
@@ -46,40 +46,40 @@ sex_distribution_heatmap <- function(data,  title=NULL,
     color_palette = generate_color_palette(color.scale.bins, color.scale.colors)
 
     # Associate the corresponding bin to each row of the data frame
-    data$data$Bin = factor(unlist(lapply(raw_data$Sequences, function(x) names(color_palette)[tail(which(x >= color.scale.bins), n=1)])), levels = names(color_palette))
+    data$data$Bin = factor(unlist(lapply(data$data$Sequences, function(x) names(color_palette)[tail(which(x >= color.scale.bins), n=1)])), levels = names(color_palette))
 
     # Check if tile is significant by comparing to significance threshold
-    data$data$Significant = as.factor(unlist(lapply(raw_data$'P-value', function(x) x < significance.threshold)))
+    data$data$Significant = as.factor(unlist(lapply(data$data$'P-value', function(x) x < significance.threshold)))
 
     # Generate the plot
-    g = ggplot(data$data, aes(x = Males, y = Females)) +
-        geom_tile(aes(fill = Bin), color = "grey50", size = 0.1) +
-        theme_bw() +
-        theme(plot.margin = margin(5, 5, 5, 5),
-              panel.border = element_rect(size = 0.5, color = "black"),
-              panel.grid = element_blank(),
-              axis.text = element_text(size = 16, color = "black", face = "bold"),
-              axis.title.x = element_text(size = 18, face = "bold", margin = margin(10, 0, 0, 0)),
-              axis.title.y = element_text(size = 18, face = "bold", margin = margin(0, 10, 0, 0)),
-              legend.margin = margin(0, 0, 10, 0), legend.title = element_text(size = 14, face = "bold"),
-              legend.text = element_text(size = 11), legend.key.height = unit(0.05, "npc"), legend.key.width = unit(0.05, "npc"),
-              legend.key = element_rect(size = 0.5, color = "grey80"), legend.position = "right", legend.text.align = 0) +
-        scale_fill_manual(name = "Sequences", breaks = names(color_palette), values = color_palette, labels = names(color_palette), drop = FALSE) +
-        scale_x_continuous(name = "Number of males", breaks = seq(0, data$n_males, 5), minor_breaks = seq(0, data$n_males, 1), expand = c(0, 0)) +
-        scale_y_continuous(name = "Number of females", breaks = seq(0, data$n_females, 5), minor_breaks = seq(0, data$n_females, 1), expand = c(0, 0))
+    g = ggplot2::ggplot(data$data, ggplot2::aes(x = Males, y = Females)) +
+        ggplot2::geom_tile(ggplot2::aes(fill = Bin), color = "grey50", size = 0.1) +
+        ggplot2::theme_bw() +
+        ggplot2::theme(plot.margin = ggplot2::margin(5, 5, 5, 5),
+              panel.border = ggplot2::element_rect(size = 0.5, color = "black"),
+              panel.grid = ggplot2::element_blank(),
+              axis.text = ggplot2::element_text(size = 16, color = "black", face = "bold"),
+              axis.title.x = ggplot2::element_text(size = 18, face = "bold", margin = ggplot2::margin(10, 0, 0, 0)),
+              axis.title.y = ggplot2::element_text(size = 18, face = "bold", margin = ggplot2::margin(0, 10, 0, 0)),
+              legend.margin = ggplot2::margin(0, 0, 10, 0), legend.title = ggplot2::element_text(size = 14, face = "bold"),
+              legend.text = ggplot2::element_text(size = 11), legend.key.height = ggplot2::unit(0.05, "npc"), legend.key.width = ggplot2::unit(0.05, "npc"),
+              legend.key = ggplot2::element_rect(size = 0.5, color = "grey80"), legend.position = "right", legend.text.align = 0) +
+        ggplot2::scale_fill_manual(name = "Sequences", breaks = names(color_palette), values = color_palette, labels = names(color_palette), drop = FALSE) +
+        ggplot2::scale_x_continuous(name = "Number of males", breaks = seq(0, data$n_males, 5), minor_breaks = seq(0, data$n_males, 1), expand = c(0, 0)) +
+        ggplot2::scale_y_continuous(name = "Number of females", breaks = seq(0, data$n_females, 5), minor_breaks = seq(0, data$n_females, 1), expand = c(0, 0))
 
     # Add highlight to significant tiles if specified
     if (show.significance) {
-        g = g + geom_tile(data=data$data, aes(x=Males, y=Females, color=Significant), fill="NA", size=0.4) +
-            scale_color_manual(name=element_blank(), values=c("TRUE"=significance.color, "FALSE"="NA", color_palette), breaks = c("TRUE"), labels = c("Signif."))
+        g = g + ggplot2::geom_tile(data=data$data, ggplot2::aes(x=Males, y=Females, color=Significant), fill="NA", size=0.4) +
+            ggplot2::scale_color_manual(name=ggplot2::element_blank(), values=c("TRUE"=significance.color, "FALSE"="NA", color_palette), breaks = c("TRUE"), labels = c("Signif."))
     }
 
     # Add title if specified
     if (!is.null(title)) {
-        g = g + ggtitle(title) +
-            theme(plot.title = element_text(hjust = 0.5, size=20, face="bold", margin = margin(0, 0, 10, 0)))
+        g = g + ggplot2::ggtitle(title) +
+            ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size=20, face="bold", margin = margin(0, 0, 10, 0)))
     } else {
-        g = g + theme(plot.title = element_blank())
+        g = g + ggplot2::theme(plot.title = ggplot2::element_blank())
     }
 
     return(g)

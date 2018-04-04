@@ -52,17 +52,17 @@ plot_sex_distribution <- function(input_file_path, output_file_path=NULL, title=
         stop(paste0("The specified input file (", input_file_path, ") does not exist."))
     }
 
-    data = load_sex_distribution_table(input_file_path)
-    heatmap = sex_distribution_heatmap(data,  title=title,
-                                       show.significance=show.significance, significance.color=significance.color, significance.threshold=significance.threshold,
-                                       color.scale.bins=color.scale.bins, color.scale.colors=color.scale.colors)
+    data <- load_sex_distribution_table(input_file_path)
+    heatmap <- sex_distribution_heatmap(data,  title=title,
+                                        show.significance=show.significance, significance.color=significance.color, significance.threshold=significance.threshold,
+                                        color.scale.bins=color.scale.bins, color.scale.colors=color.scale.colors)
 
     if (autoscale) {
-        ratio = data$n_females / data$n_males
+        ratio <- data$n_females / data$n_males
         if (is.null(title)) {
-            height = width * (ratio - 0.05)
+            height <- width * (ratio - 0.05)
         } else {
-            height = width * ratio
+            height <- width * ratio
         }
     }
 

@@ -26,7 +26,7 @@
 #'                                    color.scale.colors=c("white", "red3"))
 
 
-sex_distribution_heatmap <- function(data,  title=NULL,
+sex_distribution_heatmap <- function(data, title=NULL,
                                      show.significance=TRUE, significance.color="red3", significance.threshold=0.05,
                                      color.scale.bins=c(0, 1, 5, 25, 100, 1000), color.scale.colors=c("white", "navyblue")) {
 
@@ -48,37 +48,45 @@ sex_distribution_heatmap <- function(data,  title=NULL,
     data$data$Significant <- as.factor(unlist(lapply(data$data$'P-value', function(x) x < significance.threshold)))
 
     # Generate the plot
-    g <- ggplot2::ggplot(data$data, ggplot2::aes(x = Males, y = Females)) +
-         ggplot2::geom_tile(ggplot2::aes(fill = Bin), color = "grey50", size = 0.1) +
-         ggplot2::theme_bw() +
-         ggplot2::theme(plot.margin = ggplot2::margin(5, 5, 5, 5),
-              panel.border = ggplot2::element_rect(size = 0.5, color = "black"),
-              panel.grid = ggplot2::element_blank(),
-              axis.text = ggplot2::element_text(size = 16, color = "black", face = "bold"),
-              axis.title.x = ggplot2::element_text(size = 18, face = "bold", margin = ggplot2::margin(10, 0, 0, 0)),
-              axis.title.y = ggplot2::element_text(size = 18, face = "bold", margin = ggplot2::margin(0, 10, 0, 0)),
-              legend.margin = ggplot2::margin(0, 0, 10, 0), legend.title = ggplot2::element_text(size = 14, face = "bold"),
-              legend.text = ggplot2::element_text(size = 11), legend.key.height = ggplot2::unit(0.05, "npc"), legend.key.width = ggplot2::unit(0.05, "npc"),
-              legend.key = ggplot2::element_rect(size = 0.5, color = "grey80"), legend.position = "right", legend.text.align = 0) +
-         ggplot2::scale_fill_manual(name = "Sequences", breaks = names(color_palette), values = color_palette, labels = names(color_palette), drop = FALSE) +
-         ggplot2::scale_x_continuous(name = "Number of males", breaks = seq(0, data$n_males, 5), minor_breaks = seq(0, data$n_males, 1), expand = c(0, 0)) +
-         ggplot2::scale_y_continuous(name = "Number of females", breaks = seq(0, data$n_females, 5), minor_breaks = seq(0, data$n_females, 1), expand = c(0, 0))
+    heatmap <- ggplot2::ggplot(data$data, ggplot2::aes(x = Males, y = Females)) +
+        ggplot2::geom_tile(ggplot2::aes(fill = Bin), color = "grey50", size = 0.1) +
+        ggplot2::theme_bw() +
+        ggplot2::theme(plot.margin = ggplot2::margin(5, 5, 5, 5),
+                       panel.border = ggplot2::element_rect(size = 0.5, color = "black"),
+                       panel.grid = ggplot2::element_blank(),
+                       axis.text = ggplot2::element_text(size = 16, color = "black", face = "bold"),
+                       axis.title.x = ggplot2::element_text(size = 18, face = "bold", margin = ggplot2::margin(10, 0, 0, 0)),
+                       axis.title.y = ggplot2::element_text(size = 18, face = "bold", margin = ggplot2::margin(0, 10, 0, 0)),
+                       legend.margin = ggplot2::margin(0, 0, 10, 0),
+                       legend.title = ggplot2::element_text(size = 14, face = "bold"),
+                       legend.text = ggplot2::element_text(size = 11),
+                       legend.key.height = ggplot2::unit(0.05, "npc"),
+                       legend.key.width = ggplot2::unit(0.05, "npc"),
+                       legend.key = ggplot2::element_rect(size = 0.5, color = "grey80"),
+                       legend.position = "right",
+                       legend.text.align = 0) +
+        ggplot2::scale_fill_manual(name = "Sequences", breaks = names(color_palette), values = color_palette, labels = names(color_palette), drop = FALSE) +
+        ggplot2::scale_x_continuous(name = "Number of males", breaks = seq(0, data$n_males, 5), minor_breaks = seq(0, data$n_males, 1), expand = c(0, 0)) +
+        ggplot2::scale_y_continuous(name = "Number of females", breaks = seq(0, data$n_females, 5), minor_breaks = seq(0, data$n_females, 1), expand = c(0, 0))
 
     # Add highlight to significant tiles if specified
     if (show.significance) {
-        g <- g + ggplot2::geom_tile(data=data$data, ggplot2::aes(x=Males, y=Females, color=Significant), fill="NA", size=0.4) +
-             ggplot2::scale_color_manual(name=ggplot2::element_blank(), values=c("TRUE"=significance.color, "FALSE"="NA", color_palette), breaks = c("TRUE"), labels = c("Signif."))
+        heatmap <- heatmap +
+            ggplot2::geom_tile(data=data$data, ggplot2::aes(x=Males, y=Females, color=Significant), fill="NA", size=0.4) +
+            ggplot2::scale_color_manual(name=ggplot2::element_blank(), values=c("TRUE"=significance.color, "FALSE"="NA", color_palette), breaks = c("TRUE"), labels = c("Signif."))
     }
 
     # Add title if specified
     if (!is.null(title)) {
-        g <- g + ggplot2::ggtitle(title) +
-             ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size=20, face="bold", margin = margin(0, 0, 10, 0)))
+        heatmap <- heatmap +
+            ggplot2::ggtitle(title) +
+            ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size=20, face="bold", margin = margin(0, 0, 10, 0)))
     } else {
-        g <- g + ggplot2::theme(plot.title = ggplot2::element_blank())
+        heatmap <- heatmap +
+            ggplot2::theme(plot.title = ggplot2::element_blank())
     }
 
-    return(g)
+    return(heatmap)
 }
 
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_popmap.R
 \name{load_popmap}
 \alias{load_popmap}
-\title{Popmap loader}
+\title{Load a population map}
 \usage{
 load_popmap(input_file_path)
 }
@@ -13,7 +13,7 @@ load_popmap(input_file_path)
 A vector with individuals as names and sex as values.
 }
 \description{
-Load a population map.
+Loads a population map from a popmap file.
 }
 \examples{
 popmap = load_popmap(input_file_path)

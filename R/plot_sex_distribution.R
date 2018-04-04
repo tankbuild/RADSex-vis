@@ -1,6 +1,6 @@
 #' @title Plot sex distribution
 #'
-#' @description Plot the heatmap of distribution of sequences between sexes from a table generated with RADSex.
+#' @description Plots the heatmap of distribution of sequences between sexes from a table generated with RADSex.
 #'
 #' @param input_file_path Path to a table of distribution of sequences between sexes.
 #'

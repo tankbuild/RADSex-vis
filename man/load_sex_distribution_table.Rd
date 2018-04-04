@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_sex_distribution_table.R
 \name{load_sex_distribution_table}
 \alias{load_sex_distribution_table}
-\title{Sex distribution table loader}
+\title{Load a sex distribution table}
 \usage{
 load_sex_distribution_table(input_file_path)
 }
@@ -10,10 +10,13 @@ load_sex_distribution_table(input_file_path)
 \item{input_file_path}{Path to a table of distribution of sequences between sexes.}
 }
 \value{
-A list object containing the data, number of males, and number of females.
+A list with the following elements:
+\item{data}{A data frame of the distribution of sequences between sexes.}
+\item{n_males}{Number of males in the population}
+\item{n_females}{Number of females in the population}
 }
 \description{
-Load a table of distribution of sequences between sexes obtained with RADSex sex_distribution.
+Loads a table of distribution of sequences between sexes obtained with RADSex sex_distribution.
 }
 \examples{
 data = load_sex_distribution_table(input_file_path)

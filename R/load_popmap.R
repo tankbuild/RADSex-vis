@@ -1,6 +1,6 @@
-#' @title Popmap loader
+#' @title Load a population map
 #'
-#' @description Load a population map.
+#' @description Loads a population map from a popmap file.
 #'
 #' @param input_file_path Path to a population map.
 #'

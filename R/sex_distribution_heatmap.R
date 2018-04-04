@@ -1,9 +1,9 @@
 #' @title Sex distribution heatmap
 #'
-#' @description Generate a heatmap of the distribution of sequences between two populations. In the resulting heatmap, the color of a tile at coordinates (x, y)
+#' @description Generates a heatmap of the distribution of sequences between two populations. In the resulting heatmap, the color of a tile at coordinates (x, y)
 #' indicates the number of sequences present in x males, on the horizontal axis, and y females, on the vertical axis.
 #'
-#' @param data A table of distribution of sequences between sexes obtained with the load_sex_distribution_table function.
+#' @param data A table of distribution of sequences between sexes obtained with the \code{\link{load_sex_distribution_table}} function.
 #'
 #' @param title Plot title.
 #'
@@ -29,10 +29,6 @@
 sex_distribution_heatmap <- function(data,  title=NULL,
                                      show.significance=TRUE, significance.color="red3", significance.threshold=0.05,
                                      color.scale.bins=c(0, 1, 5, 25, 100, 1000), color.scale.colors=c("white", "navyblue")) {
-
-    # # Ignore warnings
-    # options(warn = -1)
-    # options("getSymbols.warning4.0" = FALSE)
 
     # Check that parameters were input correctly
     if (length(color.scale.bins) < 2) {

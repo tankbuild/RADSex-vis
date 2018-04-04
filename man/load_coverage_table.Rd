@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_coverage_table.R
 \name{load_coverage_table}
 \alias{load_coverage_table}
-\title{Coverage table loader}
+\title{Load a coverage table}
 \usage{
 load_coverage_table(input_file_path)
 }
@@ -13,7 +13,7 @@ load_coverage_table(input_file_path)
 A data frame containing the coverage data.
 }
 \description{
-Load a table of coverage obtained with RADSex subset, RADSex significant_sequences, or RADSex group_loci.
+Loads a table of coverage obtained with RADSex subset, RADSex significant_sequences, or RADSex group_loci.
 }
 \examples{
 data = load_coverage_table(input_file_path)

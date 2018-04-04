@@ -1,10 +1,13 @@
-#' @title Sex distribution table loader
+#' @title Load a sex distribution table
 #'
-#' @description Load a table of distribution of sequences between sexes obtained with RADSex sex_distribution.
+#' @description Loads a table of distribution of sequences between sexes obtained with RADSex sex_distribution.
 #'
 #' @param input_file_path Path to a table of distribution of sequences between sexes.
 #'
-#' @return A list object containing the data, number of males, and number of females.
+#' @return A list with the following elements:
+#' \item{data}{A data frame of the distribution of sequences between sexes.}
+#' \item{n_males}{Number of males in the population}
+#' \item{n_females}{Number of females in the population}
 #'
 #' @examples
 #' data = load_sex_distribution_table(input_file_path)

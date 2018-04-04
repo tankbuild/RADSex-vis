@@ -40,7 +40,7 @@ The resulting heatmap will not be square if the number of males and females in t
 A heatmap stored in a ggplot object.
 }
 \description{
-Plot the heatmap of distribution of sequences between sexes from a table generated with RADSex.
+Plots the heatmap of distribution of sequences between sexes from a table generated with RADSex.
 }
 \examples{
 # No autoscale: the plot dimensions are specified with "width" and "height".

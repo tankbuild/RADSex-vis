@@ -10,7 +10,7 @@ sex_distribution_heatmap(data, title = NULL, show.significance = TRUE,
   color.scale.colors = c("white", "navyblue"))
 }
 \arguments{
-\item{data}{A table of distribution of sequences between sexes obtained with the load_sex_distribution_table function.}
+\item{data}{A table of distribution of sequences between sexes obtained with the \code{\link{load_sex_distribution_table}} function.}
 
 \item{title}{Plot title.}
 
@@ -28,7 +28,7 @@ sex_distribution_heatmap(data, title = NULL, show.significance = TRUE,
 A heatmap stored in a ggplot object.
 }
 \description{
-Generate a heatmap of the distribution of sequences between two populations. In the resulting heatmap, the color of a tile at coordinates (x, y)
+Generates a heatmap of the distribution of sequences between two populations. In the resulting heatmap, the color of a tile at coordinates (x, y)
 indicates the number of sequences present in x males, on the horizontal axis, and y females, on the vertical axis.
 }
 \examples{

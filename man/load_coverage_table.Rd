@@ -13,7 +13,7 @@ load_coverage_table(input_file_path)
 A data frame containing the coverage data.
 }
 \description{
-Loads a table of coverage obtained with RADSex subset, RADSex significant_sequences, or RADSex group_loci.
+Loads a table of coverage obtained with RADSex subset, RADSex signif, or RADSex loci.
 }
 \examples{
 data = load_coverage_table(input_file_path)

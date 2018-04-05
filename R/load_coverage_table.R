@@ -1,6 +1,6 @@
 #' @title Load a coverage table
 #'
-#' @description Loads a table of coverage obtained with RADSex subset, RADSex significant_sequences, or RADSex group_loci.
+#' @description Loads a table of coverage obtained with RADSex subset, RADSex signif, or RADSex loci.
 #'
 #' @param input_file_path Path to a table of coverage.
 #'

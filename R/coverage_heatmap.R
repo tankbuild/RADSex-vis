@@ -64,7 +64,7 @@ coverage_heatmap <- function(data, popmap=NULL, title=NULL,
               panel.border = ggplot2::element_rect(size = 0.75, color = "black"),
               legend.position = "right",
               legend.background = ggplot2::element_rect(color="black", size=0.5),
-              legend.margin = ggplot2::margin(5, 5, 5, 5),
+              legend.margin = ggplot2::margin(3, 3, 3, 3),
               legend.title = ggplot2::element_text(size = 14, face = "bold"),
               legend.text = ggplot2::element_text(size = 11),
               legend.key.height = ggplot2::unit(0.06, "npc"),
@@ -102,7 +102,7 @@ coverage_heatmap <- function(data, popmap=NULL, title=NULL,
     if (individual.dendrogram == TRUE) {
 
         # Compute individual dendrogram object
-        individual_dendrogram <- suppressMessages(ggdendro::ggdendrogram(individual_clusters, labels = FALSE, leaf_labels = FALSE, theme_dendro = TRUE, rotate = FALSE) +
+        individual_dendrogram <- suppressMessages(ggdendro::ggdendrogram(data$individuals, labels = FALSE, leaf_labels = FALSE, theme_dendro = TRUE, rotate = FALSE) +
                                                       ggplot2::theme(plot.margin = grid::unit(c(0.1, 0.01, 0, 0.01), 'npc'),
                                                                      axis.text.x = ggplot2::element_blank(),
                                                                      axis.text.y = ggplot2::element_blank(),
@@ -120,7 +120,7 @@ coverage_heatmap <- function(data, popmap=NULL, title=NULL,
 
     if (sequence.dendrogram) {
 
-        sequence_dendrogram <- suppressMessages(ggdendro::ggdendrogram(sequence_clusters, labels = FALSE, leaf_labels = FALSE, theme_dendro = TRUE, rotate = FALSE) +
+        sequence_dendrogram <- suppressMessages(ggdendro::ggdendrogram(data$sequences, labels = FALSE, leaf_labels = FALSE, theme_dendro = TRUE, rotate = FALSE) +
                                                     ggplot2::theme(plot.margin = grid::unit(c(0.05, 0.1, 0.05, 0), 'npc'),
                                                                    axis.text.x = ggplot2::element_blank(),
                                                                    axis.text.y = ggplot2::element_blank(),

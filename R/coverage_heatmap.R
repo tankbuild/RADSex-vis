@@ -24,7 +24,7 @@
 #'
 #' @param sequence.dendrogram If TRUE, shows sequence clustering dendrogram on the y-axis.
 #'
-#' @return A coverage heatmap stored in a ggplot object.
+#' @return A coverage heatmap stored in a gtable object.
 #'
 #' @examples
 #' heatmap = coverage_heatmap(data, popmap=popmap,
@@ -63,12 +63,10 @@ coverage_heatmap <- function(data, popmap=NULL, title=NULL,
               plot.margin = ggplot2::margin(15, 15, 15, 30),
               panel.border = ggplot2::element_rect(size = 0.75, color = "black"),
               legend.position = "right",
-              legend.background = ggplot2::element_rect(color="black", size=0.5),
-              legend.margin = ggplot2::margin(3, 3, 3, 3),
               legend.title = ggplot2::element_text(size = 14, face = "bold"),
               legend.text = ggplot2::element_text(size = 11),
-              legend.key.height = ggplot2::unit(0.06, "npc"),
-              legend.key.width = ggplot2::unit(0.04, "npc")) +
+              legend.key.height = ggplot2::unit(0.1, "npc"),
+              legend.key.width = ggplot2::unit(0.06, "npc")) +
         ggplot2::scale_fill_gradientn(name = "Cov.", colours = coverage.palette, values = c(0, 0.00001, data$distribution[4]/data$distribution[6], data$distribution[5]/data$distribution[6], 1)) +
         ggplot2::scale_x_discrete(expand = c(0, 0)) +
         ggplot2::scale_y_discrete(expand = c(0, 0))

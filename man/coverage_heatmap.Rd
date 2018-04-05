@@ -33,7 +33,7 @@ coverage_heatmap(data, popmap = NULL, title = NULL,
 \item{sequence.dendrogram}{If TRUE, shows sequence clustering dendrogram on the y-axis.}
 }
 \value{
-A coverage heatmap stored in a ggplot object.
+A coverage heatmap stored in a gtable object.
 }
 \description{
 Generates a heatmap of coverage for a subset of sequences. In the resulting heatmap, the color of a tile at coordinates (x, y)

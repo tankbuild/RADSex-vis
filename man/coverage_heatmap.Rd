@@ -6,7 +6,9 @@
 \usage{
 coverage_heatmap(data, popmap = NULL, title = NULL,
   males.color = "dodgerblue3", females.color = "red3",
-  coverage.palette = c("white", "royalblue2", "black", "gold2", "red3"))
+  coverage.palette = c("white", "royalblue2", "black", "gold2", "red3"),
+  individual.names = TRUE, sequence.names = FALSE,
+  individual.dendrogram = TRUE, sequence.dendrogram = TRUE)
 }
 \arguments{
 \item{data}{A table of coverage obtained with the \code{\link{load_coverage_table}} function.}
@@ -21,6 +23,14 @@ coverage_heatmap(data, popmap = NULL, title = NULL,
 
 \item{coverage.palette}{Color palette for coverage. The value should be a vector of length 5 corresponding to the following intervals/values:
 (0, 1 : mean, mean : 3rd quartile, 3rd quartile : (max - 1), max)}
+
+\item{individual.names}{If TRUE, shows individual names on the x-axis.}
+
+\item{sequence.names}{If TRUE, shows sequence names on the y-axis.}
+
+\item{individual.dendrogram}{If TRUE, shows individual clustering dendrogram on the x-axis.}
+
+\item{sequence.dendrogram}{If TRUE, shows sequence clustering dendrogram on the y-axis.}
 }
 \value{
 A coverage heatmap stored in a ggplot object.
@@ -33,5 +43,7 @@ indicates the coverage of the sequence y in the individual x.
 heatmap = coverage_heatmap(data, popmap=popmap,
                            title="Individuals and sequences clustering based on coverage",
                            males.color="blue", females.color="red",
-                           coverage.palette=c("white", "green", "black", "red", "red3"))
+                           coverage.palette=c("white", "green", "black", "red", "red3"),
+                           individual.names=TRUE, sequence.names=TRUE,
+                           individual.dendrogram=TRUE, sequence.dendrogram=TRUE)
 }

@@ -12,8 +12,8 @@
 load_names_file <- function(input_file_path, group.unplaced=TRUE) {
 
     raw_data <- suppressMessages(read_delim(input_file_path, "\t", escape_double = FALSE, col_names = FALSE,  trim_ws = TRUE))
-    data = raw_data$X2
-    names(data) = raw_data$X1
+    data <- raw_data$X2
+    names(data) <- raw_data$X1
 
     return(data)
 }

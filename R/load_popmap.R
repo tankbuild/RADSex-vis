@@ -4,7 +4,7 @@
 #'
 #' @param input_file_path Path to a population map.
 #'
-#' @return A vector with individuals as names and sex as values.
+#' @return A vector with individuals as names and sexes as values.
 #'
 #' @examples
 #' popmap = load_popmap(input_file_path)

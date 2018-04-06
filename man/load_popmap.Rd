@@ -10,7 +10,7 @@ load_popmap(input_file_path)
 \item{input_file_path}{Path to a population map.}
 }
 \value{
-A vector with individuals as names and sex as values.
+A vector with individuals as names and sexes as values.
 }
 \description{
 Loads a population map from a popmap file.

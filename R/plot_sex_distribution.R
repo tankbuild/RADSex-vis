@@ -77,4 +77,6 @@ plot_sex_distribution <- function(input_file_path, output_file_path=NULL, title=
     } else {
         print(heatmap)
     }
+
+    return(heatmap)
 }

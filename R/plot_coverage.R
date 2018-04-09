@@ -40,6 +40,8 @@
 #'
 #' @param sequence.dendrogram If TRUE, shows sequence clustering dendrogram on the y-axis.
 #'
+#' @return A gtable object containing the heatmap and the dendrograms.
+#'
 #' @examples
 #' plot_coverage(input_file_path, popmap_file_path="./popmap.tsv",
 #'               width=12, height=10,
@@ -104,5 +106,7 @@ plot_coverage <- function(input_file_path, output_file_path = NULL, popmap_file_
         grid::grid.newpage()
         grid::grid.draw(heatmap)
     }
+
+    return(heatmap)
 }
 

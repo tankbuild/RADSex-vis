@@ -52,6 +52,9 @@ See \code{\link[stats]{hclust}} for details.}
 
 \item{sequence.dendrogram}{If TRUE, shows sequence clustering dendrogram on the y-axis.}
 }
+\value{
+A gtable object containing the heatmap and the dendrograms.
+}
 \description{
 Plots a heatmap of coverage from a table generated with RADSex subset, RADSex signif, or RADSex loci.
 }

@@ -66,7 +66,7 @@ load_mapping_results <- function(input_file_path, contig_lengths, contig_names=N
         # Regroup data into one data frame
         data <- rbind(lg_data, unplaced_data)
 
-        lengths = c(lengths, "unplaced"=sum(unplaced_lengths))
+        lengths <- c(lengths, "unplaced"=sum(unplaced_lengths))
 
     } else {
 

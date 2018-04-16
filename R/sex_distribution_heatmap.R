@@ -45,7 +45,8 @@ sex_distribution_heatmap <- function(data, title=NULL,
     data$data$Bin <- factor(unlist(lapply(data$data$Sequences, function(x) names(color_palette)[tail(which(x >= color.scale.bins), n=1)])), levels = names(color_palette))
 
     # Check if tile is significant by comparing to significance threshold
-    data$data$Significant <- as.factor(unlist(lapply(data$data$'P-value', function(x) x < significance.threshold)))
+    data$data$Significant <- unlist(lapply(data$data$'P', function(x) x < significance.threshold))
+    data$data$Significant <- as.factor(data$data$Significant & (data$data$Sequences > 0))
 
     # Generate the plot
     heatmap <- ggplot2::ggplot(data$data, ggplot2::aes(x = Males, y = Females)) +

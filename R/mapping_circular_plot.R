@@ -1,4 +1,4 @@
-#' @title Genome plot
+#' @title Mapping circular plot
 #'
 #' @description Generates a circular plot of RADSex mapping results in which each sector represents a linkage group and
 #' the x-axis represents the position on the linkage group. The y-axis on the first track shows the sex-bias of a sequence, and the second track shows the
@@ -32,21 +32,20 @@
 #'
 #'
 #' @examples
-#' genome_plot(data,
-#'             highlight=NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
-#'             base.color = "white", highlight.color = "grey80",
-#'             color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
-#'             color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
-#'             signif.threshold = 0.05, sector.titles.expand = 2)
+#' mapping_circular_plot(data,
+#'                       highlight=NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
+#'                       base.color = "white", highlight.color = "grey80",
+#'                       color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
+#'                       color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
+#'                       signif.threshold = 0.05, sector.titles.expand = 2)
 
 
-genome_plot <- function(data,
-                        highlight = NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
-                        base.color = "white", highlight.color = "grey80",
-                        color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
-                        color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
-                        signif.threshold = 0.05,
-                        sector.titles.expand = 1.9) {
+mapping_circular_plot <- function(data,
+                                  highlight = NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
+                                  base.color = "white", highlight.color = "grey80",
+                                  color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
+                                  color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
+                                  signif.threshold = 0.05, sector.titles.expand = 1.9) {
 
     signif.threshold <- -log(signif.threshold / dim(data$data)[1], 10)
 

@@ -6,7 +6,7 @@
 \usage{
 mapping_circular_plot(data, highlight = NULL, zoom.highlights = FALSE,
   zoom.ratio = 2, zoom.suffix = " (zoom)", base.color = "white",
-  highlight.color = "grey80", color.sex.bias = TRUE,
+  highlight.color = "grey80", point.size = 0.5, color.sex.bias = TRUE,
   sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
   color.unmapped = TRUE, unmapped.palette = c(`0` = "dodgerblue3", `1` =
   "goldenrod1", `2` = "grey30"), signif.threshold = 0.05,
@@ -24,6 +24,8 @@ mapping_circular_plot(data, highlight = NULL, zoom.highlights = FALSE,
 \item{base.color}{Background color of a standard sector of the plot (default "white").}
 
 \item{highlight.color}{Background color of a highlighted sector of the plot (default "grey80").}
+
+\item{point.size}{Size of a point in the plot (default 0.5)}
 
 \item{color.sex.bias}{If TRUE, points on the sex-bias track will be colored according to sex.bias.palette (default TRUE).}
 
@@ -47,7 +49,7 @@ probability of association with sex of a sequence.
 \examples{
 mapping_circular_plot(data,
                       highlight=NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
-                      base.color = "white", highlight.color = "grey80",
+                      base.color = "white", highlight.color = "grey80", point.size = 0.5,
                       color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
                       color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
                       signif.threshold = 0.05, sector.titles.expand = 2)

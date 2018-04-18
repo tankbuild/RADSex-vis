@@ -18,6 +18,8 @@
 #'
 #' @param highlight.color Background color of a highlighted sector of the plot (default "grey80").
 #'
+#' @param point.size Size of a point in the plot (default 0.5)
+#'
 #' @param color.sex.bias If TRUE, points on the sex-bias track will be colored according to sex.bias.palette (default TRUE).
 #'
 #' @param sex.bias.palette A vector of three colors defining the sex-bias track palette: female-biased, neutral, male-biased. (default c("firebrick1", "black", "dodgerblue2"))
@@ -34,7 +36,7 @@
 #' @examples
 #' mapping_circular_plot(data,
 #'                       highlight=NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
-#'                       base.color = "white", highlight.color = "grey80",
+#'                       base.color = "white", highlight.color = "grey80", point.size = 0.5,
 #'                       color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
 #'                       color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
 #'                       signif.threshold = 0.05, sector.titles.expand = 2)
@@ -42,7 +44,7 @@
 
 mapping_circular_plot <- function(data,
                                   highlight = NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
-                                  base.color = "white", highlight.color = "grey80",
+                                  base.color = "white", highlight.color = "grey80", point.size = 0.5,
                                   color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
                                   color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
                                   signif.threshold = 0.05, sector.titles.expand = 1.9) {
@@ -65,8 +67,8 @@ mapping_circular_plot <- function(data,
         to_remove = c()
         for (i in 1:length(highlight)) {
             if (!(highlight[i] %in% sectors)) {
-                if (!is.null(contig.names) & highlight[i] %in% contig.names) {
-                    highlight[i] <- names(contig.names[which(contig.names == highlight[i])])
+                if (!is.null(data$names) & highlight[i] %in% data$names) {
+                    highlight[i] <- names(data$names[which(data$names == highlight[i])])
                 } else {
                     warning(paste0("Could not find sector \"", highlight[i], "\" given by parameter \"highlight\"."))
                     to_remove <- c(to_remove, i)
@@ -172,7 +174,7 @@ mapping_circular_plot <- function(data,
                                                      minor.ticks = 4)
 
                                # Plot the Sex Bias data
-                               circlize::circos.points(x, y, cex=0.5, col = data$data$Color[which(data$data$Contig == sector.index)],
+                               circlize::circos.points(x, y, cex=point.size, col = data$data$Color[which(data$data$Contig == sector.index)],
                                                        bg = data$data$Color[which(data$data$Contig == sector.index)], pch = 21)
 
                                # Add a line at 0
@@ -220,7 +222,7 @@ mapping_circular_plot <- function(data,
                                xmax = circlize::get.cell.meta.data("xlim")[2]
 
                                # Plot -log(p association with sex)
-                               circlize::circos.points(x, y, cex = 0.5, col = data$data$ColorP[which(data$data$Contig == sector.index)],
+                               circlize::circos.points(x, y, cex = point.size, col = data$data$ColorP[which(data$data$Contig == sector.index)],
                                                        bg = data$data$ColorP[which(data$data$Contig == sector.index)], pch = 21)
 
                                # Plot a red line at the significance threshold

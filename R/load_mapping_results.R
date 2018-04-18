@@ -13,6 +13,7 @@
 #' @return A list with the following elements:
 #' \item{data}{A data frame of the mapping results.}
 #' \item{lengths}{A vector with plotted contigs as names and lengths as values}
+#' \item{names}{A vector with reference contigs names as names and corresponding contig names as values}
 #'
 #' @examples
 #' data = load_mapping_results(input_file_path, contig_lengths, contig_names=contig_names, plot.unplaced=FALSE)
@@ -75,11 +76,17 @@ load_mapping_results <- function(input_file_path, contig_lengths, contig_names=N
 
     }
 
+    if (!is.null(contig_names)) {
+        contig_names = c(contig_names, "unplaced"="Unplaced")
+    }
+
+    data$Color = as.integer(data$Color)
+
     # Negative log transform p values
     data$P <- -log(data$P, 10)
 
     # Generate output list
-    output <- list(data = data, lengths = lengths)
+    output <- list(data = data, lengths = lengths, names = contig_names)
 
     return(output)
 }

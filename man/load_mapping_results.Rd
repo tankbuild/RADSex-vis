@@ -20,6 +20,7 @@ load_mapping_results(input_file_path, contig_lengths, contig_names = NULL,
 A list with the following elements:
 \item{data}{A data frame of the mapping results.}
 \item{lengths}{A vector with plotted contigs as names and lengths as values}
+\item{names}{A vector with reference contigs names as names and corresponding contig names as values}
 }
 \description{
 Loads a table of mapping results obtained with the RADSex mapping module.

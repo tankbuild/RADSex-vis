@@ -4,16 +4,16 @@
 #'
 #' @param data A table of coverage obtained with the \code{\link{load_coverage_table}} function.
 #'
-#' @param min.coverage Minimum coverage value to consider a sequence present in an individual. Coverage lower than min.coverage will be set to 0.
+#' @param min.coverage Minimum coverage value to consider a sequence present in an individual: coverage lower than this value will be set to 0 (default 0).
 #'
-#' @param max.coverage Maximum sequence coverage allowed in an individual. Coverage higher than max.coverage will be set to max.coverage.
+#' @param max.coverage Maximum coverage allowed in an individual: coverage higher than this value will be set to this value (default 100).
 #'
 #' @param distance.method Method to use to compute the distance matrix.
-#' Possible values: "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski". See \code{\link[stats]{dist}} for details.
+#' Possible values: "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski". See \code{\link[stats]{dist}} for details (default euclidean).
 #'
 #' @param clustering.method Method to use in the clustering.
 #' Possible values: "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
-#' See \code{\link[stats]{hclust}} for details.
+#' See \code{\link[stats]{hclust}} for details (default ward.D).
 #'
 #' @return A list with the following elements:
 #' \item{data}{A data frame of coverage with individuals and sequences ordered based on the clustering results}
@@ -22,14 +22,14 @@
 #' \item{distribution}{Distribution of coverage values}
 #'
 #' @examples
-#' clustering_data = coverage_clustering(data,
-#'                                       min.coverage=0, max.coverage=100,
-#'                                       distance.method="binary", clustering.method="complete")
+#' clustering_data <- coverage_clustering(data,
+#'                                        min.coverage = 0, max.coverage = 100,
+#'                                        distance.method = "binary", clustering.method = "complete")
 
 
 coverage_clustering <- function(data,
-                               min.coverage=0, max.coverage=150,
-                               distance.method="euclidean", clustering.method="ward.D") {
+                               min.coverage = 0, max.coverage = 150,
+                               distance.method = "euclidean", clustering.method = "ward.D") {
 
     # Remove the sequence column which is not useful here
     data <- data[, -2]

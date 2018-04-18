@@ -16,5 +16,5 @@ A data frame containing the coverage data.
 Loads a table of coverage obtained with RADSex subset, RADSex signif, or RADSex loci.
 }
 \examples{
-data = load_coverage_table(input_file_path)
+data <- load_coverage_table("coverage_table.tsv")
 }

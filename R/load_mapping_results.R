@@ -4,11 +4,11 @@
 #'
 #' @param input_file_path Path to a mapping results file.
 #'
-#' @param contig_lengths A vector of contig lengths obtained with the \code{\link{load_contig_lengths} function}.
+#' @param contig_lengths A vector of contig lengths obtained with the \code{\link{load_contig_lengths}} function.
 #'
-#' @param contig_names A vector of contig names obtained with the \code{\link{load_contig_names} function}.
+#' @param contig_names A vector of contig names obtained with the \code{\link{load_contig_names}} function (default NULL).
 #'
-#' @param plot.unplaced If TRUE, unplaced contigs will be plotted as a supercontig.
+#' @param plot.unplaced If TRUE, unplaced contigs will be plotted as a supercontig (default TRUE).
 #'
 #' @return A list with the following elements:
 #' \item{data}{A data frame of the mapping results.}
@@ -16,10 +16,12 @@
 #' \item{names}{A vector with reference contigs names as names and corresponding contig names as values}
 #'
 #' @examples
-#' data = load_mapping_results(input_file_path, contig_lengths, contig_names=contig_names, plot.unplaced=FALSE)
+#' contig_lengths <- load_contig_lengths("contig_lengths.tsv")
+#' contig_names <- load_contig_names("contig_names.tsv")
+#' data = load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
 
 
-load_mapping_results <- function(input_file_path, contig_lengths, contig_names=NULL, plot.unplaced=TRUE) {
+load_mapping_results <- function(input_file_path, contig_lengths, contig_names = NULL, plot.unplaced = TRUE) {
 
     data <- suppressMessages(readr::read_delim(input_file_path, "\t", escape_double = FALSE, trim_ws = TRUE))
 
@@ -40,11 +42,11 @@ load_mapping_results <- function(input_file_path, contig_lengths, contig_names=N
 
         lg_data$Contig <- factor(lg_data$Contig, levels = gtools::mixedsort(unique(lg_data$Contig)))
         lg_data$Color <- rep(2, dim(lg_data)[1])
-        lengths = c(contig_lengths[which(names(contig_lengths) %in% lg_data$Contig)])
+        lengths <- c(contig_lengths[which(names(contig_lengths) %in% lg_data$Contig)])
 
     } else {
 
-        lengths = c()
+        lengths <- c()
     }
 
     if (plot.unplaced & dim(lg_data)[1] != dim(data)[1]) {  # If plot.unplaced is specified and there are unplaced contigs (not just LGs)
@@ -57,7 +59,7 @@ load_mapping_results <- function(input_file_path, contig_lengths, contig_names=N
         unplaced_data$Color <- order[unplaced_data$Contig] %% 2
 
         # Find lengths of unplaced contigs
-        unplaced_lengths = contig_lengths[which(names(contig_lengths) %in% names(order))]
+        unplaced_lengths <- contig_lengths[which(names(contig_lengths) %in% names(order))]
 
         # Transform position on each contig into position on cumulated contig
         temp <- cumsum(unplaced_lengths) - unplaced_lengths[1]
@@ -77,10 +79,10 @@ load_mapping_results <- function(input_file_path, contig_lengths, contig_names=N
     }
 
     if (!is.null(contig_names)) {
-        contig_names = c(contig_names, "unplaced"="Unplaced")
+        contig_names <- c(contig_names, "unplaced"="Unplaced")
     }
 
-    data$Color = as.integer(data$Color)
+    data$Color <- as.integer(data$Color)
 
     # Negative log transform p values
     data$P <- -log(data$P, 10)

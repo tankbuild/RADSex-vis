@@ -10,7 +10,7 @@
 #' \item{n_females}{Number of females in the population}
 #'
 #' @examples
-#' data = load_sex_distribution_table(input_file_path)
+#' data <- load_sex_distribution_table("sex_distribution_table.tsv")
 
 load_sex_distribution_table <- function(input_file_path) {
 

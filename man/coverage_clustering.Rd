@@ -10,16 +10,16 @@ coverage_clustering(data, min.coverage = 0, max.coverage = 150,
 \arguments{
 \item{data}{A table of coverage obtained with the \code{\link{load_coverage_table}} function.}
 
-\item{min.coverage}{Minimum coverage value to consider a sequence present in an individual. Coverage lower than min.coverage will be set to 0.}
+\item{min.coverage}{Minimum coverage value to consider a sequence present in an individual: coverage lower than this value will be set to 0 (default 0).}
 
-\item{max.coverage}{Maximum sequence coverage allowed in an individual. Coverage higher than max.coverage will be set to max.coverage.}
+\item{max.coverage}{Maximum coverage allowed in an individual: coverage higher than this value will be set to this value (default 100).}
 
 \item{distance.method}{Method to use to compute the distance matrix.
-Possible values: "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski". See \code{\link[stats]{dist}} for details.}
+Possible values: "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski". See \code{\link[stats]{dist}} for details (default euclidean).}
 
 \item{clustering.method}{Method to use in the clustering.
 Possible values: "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
-See \code{\link[stats]{hclust}} for details.}
+See \code{\link[stats]{hclust}} for details (default ward.D).}
 }
 \value{
 A list with the following elements:
@@ -32,7 +32,7 @@ A list with the following elements:
 Cluster individuals and sequences in a coverage table.
 }
 \examples{
-clustering_data = coverage_clustering(data,
-                                      min.coverage=0, max.coverage=100,
-                                      distance.method="binary", clustering.method="complete")
+clustering_data <- coverage_clustering(data,
+                                       min.coverage = 0, max.coverage = 100,
+                                       distance.method = "binary", clustering.method = "complete")
 }

@@ -66,6 +66,7 @@ plot_genome <- function(mapping_file_path, contig_lengths_file_path, chromosomes
                         color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
                         signif.threshold = 0.05, sector.titles.expand = 1.9) {
 
+    # Check that all files exist and can be opened
     if (!file.exists(mapping_file_path)) {
         stop(paste0("The specified input file (", mapping_file_path, ") does not exist."))
     }
@@ -78,14 +79,17 @@ plot_genome <- function(mapping_file_path, contig_lengths_file_path, chromosomes
         stop(paste0("The specified chromosomes names file (", chromosomes_names_file_path, ") does not exist."))
     }
 
+    # Load input files
     contig_lengths <- load_contig_lengths(contig_lengths_file_path)
     chromosomes_names <- load_contig_names(chromosomes_names_file_path)
     mapping_data <- load_mapping_results(mapping_file_path, contig_lengths, contig_names = chromosomes_names, plot.unplaced = plot.unplaced)
 
+    # Create output device if specified
     if (!is.null(output_file_path)) {
         png(output_file_path, width = width, height = height, res = res)
     }
 
+    # Generate plot
     mapping_circular_plot(mapping_data,
                           highlight = highlight, zoom.highlights = zoom.highlights, zoom.ratio = zoom.ratio, zoom.suffix = zoom.suffix,
                           base.color = base.color, highlight.color = highlight.color, point.size = point.size,
@@ -93,9 +97,9 @@ plot_genome <- function(mapping_file_path, contig_lengths_file_path, chromosomes
                           color.unmapped = color.unmapped, unmapped.palette = unmapped.palette,
                           signif.threshold = signif.threshold, sector.titles.expand = sector.titles.expand)
 
+    # Close output device if specified
     if (!is.null(output_file_path)) {
         dev.off()
     }
-
  }
 

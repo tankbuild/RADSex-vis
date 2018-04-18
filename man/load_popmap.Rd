@@ -16,5 +16,5 @@ A vector with individuals as names and sexes as values.
 Loads a population map from a popmap file.
 }
 \examples{
-popmap = load_popmap(input_file_path)
+popmap <- load_popmap("popmap.tsv")
 }

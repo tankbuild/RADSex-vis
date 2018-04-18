@@ -4,7 +4,7 @@
 \alias{load_contig_lengths}
 \title{Load a contig lengths file}
 \usage{
-load_contig_lengths(input_file_path, group.unplaced = TRUE)
+load_contig_lengths(input_file_path)
 }
 \arguments{
 \item{input_file_path}{Path to a contig lengths file.}
@@ -16,5 +16,5 @@ A vector with contigs as names and lengths as values.
 Loads a table of contig lengths.
 }
 \examples{
-lengths = load_contig_lengths(input_file_path)
+lengths <- load_contig_lengths("contig_lengths.tsv")
 }

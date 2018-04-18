@@ -13,37 +13,34 @@ coverage_heatmap(data, popmap = NULL, title = NULL,
 \arguments{
 \item{data}{A table of coverage obtained with the \code{\link{load_coverage_table}} function.}
 
-\item{popmap}{A population map obtained with the \code{\link{load_population_map}} function.}
+\item{popmap}{A population map obtained with the \code{\link{load_population_map}} function (default NULL).}
 
-\item{title}{Plot title.}
+\item{title}{Plot title (default NULL).}
 
-\item{males.color}{If a popmap is specified, sets the color of male individual names on the horizontal axis.}
+\item{males.color}{If a popmap is specified, sets the color of male individual names on the horizontal axis (default "dodgerblue3").}
 
-\item{females.color}{If a popmap is specified, sets the color of female individual names on the horizontal axis.}
+\item{females.color}{If a popmap is specified, sets the color of female individual names on the horizontal axis (default "red3").}
 
 \item{coverage.palette}{Color palette for coverage. The value should be a vector of length 5 corresponding to the following intervals/values:
-(0, 1 : mean, mean : 3rd quartile, 3rd quartile : (max - 1), max)}
+[0, 1 : mean, mean : 3rd quartile, 3rd quartile : (max - 1), max] (default c("white", "royalblue2", "black", "gold2", "red3"))}
 
-\item{individual.names}{If TRUE, shows individual names on the x-axis.}
+\item{individual.names}{If TRUE, shows individual names on the x-axis (default TRUE).}
 
-\item{sequence.names}{If TRUE, shows sequence names on the y-axis.}
+\item{sequence.names}{If TRUE, shows sequence names on the y-axis (defautl FALSE).}
 
-\item{individual.dendrogram}{If TRUE, shows individual clustering dendrogram on the x-axis.}
+\item{individual.dendrogram}{If TRUE, shows individual clustering dendrogram on the x-axis (default TRUE).}
 
-\item{sequence.dendrogram}{If TRUE, shows sequence clustering dendrogram on the y-axis.}
-}
-\value{
-A coverage heatmap stored in a gtable object.
+\item{sequence.dendrogram}{If TRUE, shows sequence clustering dendrogram on the y-axis (default FALSE).}
 }
 \description{
 Generates a heatmap of coverage for a subset of sequences. In the resulting heatmap, the color of a tile at coordinates (x, y)
 indicates the coverage of the sequence y in the individual x.
 }
 \examples{
-heatmap = coverage_heatmap(data, popmap=popmap,
-                           title="Individuals and sequences clustering based on coverage",
-                           males.color="blue", females.color="red",
-                           coverage.palette=c("white", "green", "black", "red", "red3"),
-                           individual.names=TRUE, sequence.names=TRUE,
-                           individual.dendrogram=TRUE, sequence.dendrogram=TRUE)
+heatmap = coverage_heatmap(data, popmap = popmap,
+                           title = "Individuals and sequences clustering based on coverage",
+                           males.color = "blue", females.color = "red",
+                           coverage.palette = c("white", "green", "black", "red", "red3"),
+                           individual.names = TRUE, sequence.names = TRUE,
+                           individual.dendrogram = TRUE, sequence.dendrogram = TRUE)
 }

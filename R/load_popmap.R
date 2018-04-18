@@ -7,7 +7,7 @@
 #' @return A vector with individuals as names and sexes as values.
 #'
 #' @examples
-#' popmap = load_popmap(input_file_path)
+#' popmap <- load_popmap("popmap.tsv")
 
 load_popmap <- function(input_file_path) {
 

@@ -7,7 +7,7 @@
 #' @return A data frame containing the coverage data.
 #'
 #' @examples
-#' data = load_coverage_table(input_file_path)
+#' data <- load_coverage_table("coverage_table.tsv")
 
 load_coverage_table <- function(input_file_path) {
 

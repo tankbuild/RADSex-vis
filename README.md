@@ -6,8 +6,8 @@ The `radsex-vis` R package is **currently under development** and has not been o
 
 The `radsex-vis` R package was developed to visualize results from the [RADsex pipeline](https://github.com/INRA-LPGP/RadSex). For each RADSex command, there is a corresponding function in `radsex-vis` to easily generate a plot from the results file of RADSex. For each analysis, the general organisation of `radsex-vis` is as follows:
 
-- A function to directly plot the results file, for instance, `plot_sex_distribution()`. This is the function you should use most of the time, and it always starts with *plot*.
-- A function to load data from a specific results file, for instance `load_sex_distribution_table()`. This function always starts with *load*.
+- A function to directly plot the results file, for instance, `plot_sex_distribution()`. This is the function you should use most of the time, and its name always starts with *plot*.
+- A function to load data from a specific results file, for instance `load_sex_distribution_table()`. This function's name always starts with *load*.
 - A function to generate a plot from a results file loaded in R, for instance `sex_distribution_heatmap()`.
 
 The *plot* functions are meant to be easy to use while still offering in-depth customization if desired. Other functions can be used by experienced R users who would like more control over the plotting steps.

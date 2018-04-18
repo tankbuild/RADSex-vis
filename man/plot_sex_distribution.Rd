@@ -5,7 +5,7 @@
 \title{Plot sex distribution}
 \usage{
 plot_sex_distribution(input_file_path, output_file_path = NULL,
-  title = NULL, width = 8, height = 6, dpi = 300, autoscale = FALSE,
+  title = NULL, width = 8, height = 7, dpi = 300, autoscale = FALSE,
   show.significance = TRUE, significance.color = "red3",
   significance.threshold = 0.05, color.scale.bins = c(0, 1, 5, 25, 100,
   1000), color.scale.colors = c("white", "navyblue"))
@@ -13,46 +13,43 @@ plot_sex_distribution(input_file_path, output_file_path = NULL,
 \arguments{
 \item{input_file_path}{Path to a table of distribution of sequences between sexes.}
 
-\item{output_file_path}{Path to the plot output file. If no output file is specified, the heatmap will be plotted in the default device.}
+\item{output_file_path}{Path to the plot output file. If no output file is specified, the heatmap will be plotted in the default device (default NULL).}
 
-\item{title}{Plot title.}
+\item{title}{Plot title (default NULL).}
 
-\item{width}{Width of the output file (in inches).}
+\item{width}{Width of the output file in inches (default 8).}
 
-\item{height}{Height of the output file (in inches).}
+\item{height}{Height of the output file in inches (default 7).}
 
-\item{dpi}{Resolution of the output file.}
+\item{dpi}{Resolution of the output file (default 300).}
 
 \item{autoscale}{If set to TRUE, the height of the output file will be automatically set so that horizontal and vertical scales are equal.
-The resulting heatmap will not be square if the number of males and females in the population are very different.}
+The resulting heatmap will not be square if the number of males and females in the population are very different (default FALSE).}
 
-\item{show.significance}{If TRUE, tiles with significant association with sex are highlighted with the color defined in the significance.color parameter.}
+\item{show.significance}{If TRUE, tiles with significant association with sex are highlighted with the color defined in the significance.color parameter (default TRUE).}
 
-\item{significance.color}{Color of the border for tiles significantly associated with sex.}
+\item{significance.color}{Color of the border for tiles significantly associated with sex (default "red3").}
 
-\item{significance.threshold}{P-value threshold to consider a tile significantly associated with sex.}
+\item{significance.threshold}{P-value threshold to consider a tile significantly associated with sex (default 0.05).}
 
-\item{color.scale.bins}{A vector of values to use as bins in the color palette.}
+\item{color.scale.bins}{A vector of values to use as bins in the color palette (default c(0, 1, 5, 25, 100, 1000)).}
 
-\item{color.scale.colors}{A vector of two colors used to create the color palette gradient.}
-}
-\value{
-A heatmap stored in a ggplot object.
+\item{color.scale.colors}{A vector of two colors used to create the color palette gradient (default c("white", "navyblue")).}
 }
 \description{
 Plots a heatmap of distribution of sequences between sexes from a table generated with RADSex distrib
 }
 \examples{
 # No autoscale: the plot dimensions are specified with "width" and "height".
-sex_distribution_heatmap(input_file_path, output_file_path='heatmap.png',
-                         title="Distribution of sequences between sexes",
-                         width=10, height=10, dpi=200,
-                         significance.color="gold", significance.threshold=0.05,
-                         color.scale.bins=c(0, 10, 100, 1000),
-                         color.scale.colors=c("white", "grey10"))
+plot_sex_distribution("sex_distribution_table.tsv", output_file_path = "heatmap.png",
+                      title = "Distribution of sequences between sexes",
+                      width = 10, height = 10, dpi = 200,
+                      significance.color = "gold", significance.threshold = 0.05,
+                      color.scale.bins = c(0, 10, 100, 1000),
+                      color.scale.colors = c("white", "grey10"))
 
 # Autoscale: the plot dimensions are automatically calculated from "width".
-sex_distribution_heatmap(input_file_path, output_file_path='heatmap.png',
-                         title="Distribution of sequences between sexes",
-                         width=10, autoscale=TRUE)
+plot_sex_distribution("sex_distribution_table.tsv", output_file_path = "heatmap.png",
+                      title = "Distribution of sequences between sexes",
+                      width = 10, autoscale = TRUE)
 }

@@ -35,7 +35,7 @@
 #'
 #' @examples
 #' mapping_circular_plot(data,
-#'                       highlight=NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
+#'                       highlight = NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
 #'                       base.color = "white", highlight.color = "grey80", point.size = 0.5,
 #'                       color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
 #'                       color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
@@ -56,15 +56,15 @@ mapping_circular_plot <- function(data,
     sectors <- names(data$lengths)
     sector_width <- data$lengths
     if (!is.null(data$names)) {
-        sector_names = data$names
+        sector_names <- data$names
     } else {
-        sector_names = sectors
-        names(sector_names) = sectors
+        sector_names <- sectors
+        names(sector_names) <- sectors
     }
 
     # Test if lgs specified in "highlight" exist, otherwise remove them from the list and print a warning
     if (!is.null(highlight)) {
-        to_remove = c()
+        to_remove <- c()
         for (i in 1:length(highlight)) {
             if (!(highlight[i] %in% sectors)) {
                 if (!is.null(data$names) & highlight[i] %in% data$names) {
@@ -85,7 +85,7 @@ mapping_circular_plot <- function(data,
         zoom_data$Contig <- paste0(zoom_data$Contig, zoom.suffix)  # Edit zoomed sector names with suffix
         data$data <- rbind(data$data, zoom_data)  # Combine base sectors data and zoomed sectors data
         zoom_lengths <- data$lengths[highlight]  # Extract zoomed sector lengths
-        names(zoom_lengths) = paste0(highlight, zoom.suffix)  # Eddit zoomed sector names with suffix
+        names(zoom_lengths) <- paste0(highlight, zoom.suffix)  # Eddit zoomed sector names with suffix
         data$lengths <- c(data$lengths, zoom_lengths)  # Combine base sectors lengths and zoomed sectors lengths
         sectors <- c(sectors, paste0(highlight, zoom.suffix))  # Update sectors list
         n_sectors <- n_sectors + length(highlight)  # Update sectors count
@@ -124,7 +124,7 @@ mapping_circular_plot <- function(data,
     }
 
     # Calculate angle offset to have zoomed sector on top
-    a = 360 * sum(tail(sector_width, n=length(highlight))) / sum(sector_width) / 2 + 4.75
+    a <- 360 * sum(tail(sector_width, n = length(highlight))) / sum(sector_width) / 2 + 4.75
 
     circlize::circos.clear()  # Reset circos parameters
 
@@ -149,12 +149,12 @@ mapping_circular_plot <- function(data,
                            panel.fun = function(x, y) {  # panel.fun is the function drawing the track
 
                                # Get useful sector values
-                               sector.index = circlize::get.cell.meta.data("sector.index")
-                               xcenter = circlize::get.cell.meta.data("xcenter")
-                               ymin = circlize::get.cell.meta.data("ylim")[1]
-                               ymax = circlize::get.cell.meta.data("ylim")[2]
-                               xmin = circlize::get.cell.meta.data("xlim")[1]
-                               xmax = circlize::get.cell.meta.data("xlim")[2]
+                               sector.index <- circlize::get.cell.meta.data("sector.index")
+                               xcenter <- circlize::get.cell.meta.data("xcenter")
+                               ymin <- circlize::get.cell.meta.data("ylim")[1]
+                               ymax <- circlize::get.cell.meta.data("ylim")[2]
+                               xmin <- circlize::get.cell.meta.data("xlim")[1]
+                               xmax <- circlize::get.cell.meta.data("xlim")[2]
 
                                # Add titles to sectors
                                circlize::circos.text(xcenter,
@@ -165,7 +165,7 @@ mapping_circular_plot <- function(data,
                                                      niceFacing = TRUE)
 
                                # Create x axis on top of sectors
-                               circlize::circos.axis(h="top",
+                               circlize::circos.axis(h = "top",
                                                      major.at = c(0, xmax/2, xmax),
                                                      labels.cex = 1.2,
                                                      labels.facing = "outside",
@@ -214,12 +214,12 @@ mapping_circular_plot <- function(data,
                            panel.fun = function(x, y) { # panel.fun is the function drawing the track
 
                                # Get useful sector values
-                               sector.index = circlize::get.cell.meta.data("sector.index")
-                               xcenter = circlize::get.cell.meta.data("xcenter")
-                               ymin = circlize::get.cell.meta.data("ylim")[1]
-                               ymax = circlize::get.cell.meta.data("ylim")[2]
-                               xmin = circlize::get.cell.meta.data("xlim")[1]
-                               xmax = circlize::get.cell.meta.data("xlim")[2]
+                               sector.index <- circlize::get.cell.meta.data("sector.index")
+                               xcenter <- circlize::get.cell.meta.data("xcenter")
+                               ymin <- circlize::get.cell.meta.data("ylim")[1]
+                               ymax <- circlize::get.cell.meta.data("ylim")[2]
+                               xmin <- circlize::get.cell.meta.data("xlim")[1]
+                               xmax <- circlize::get.cell.meta.data("xlim")[2]
 
                                # Plot -log(p association with sex)
                                circlize::circos.points(x, y, cex = point.size, col = data$data$ColorP[which(data$data$Contig == sector.index)],

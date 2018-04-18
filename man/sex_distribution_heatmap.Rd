@@ -12,17 +12,17 @@ sex_distribution_heatmap(data, title = NULL, show.significance = TRUE,
 \arguments{
 \item{data}{A table of distribution of sequences between sexes obtained with the \code{\link{load_sex_distribution_table}} function.}
 
-\item{title}{Plot title.}
+\item{title}{Plot title (default NULL).}
 
-\item{show.significance}{If TRUE, tiles with significant association with sex are highlighted with the color defined in the significance.color parameter.}
+\item{show.significance}{If TRUE, tiles with significant association with sex are highlighted with the color defined in the significance.color parameter (default TRUE).}
 
-\item{significance.color}{Color of the border for tiles significantly associated with sex.}
+\item{significance.color}{Color of the border for tiles significantly associated with sex (default "red3").}
 
-\item{significance.threshold}{P-value threshold to consider a tile significantly associated with sex.}
+\item{significance.threshold}{P-value threshold to consider a tile significantly associated with sex (default 0.05).}
 
-\item{color.scale.bins}{A vector of values to use as bins in the color palette.}
+\item{color.scale.bins}{A vector of values to use as bins in the color palette (default c(0, 1, 5, 25, 100, 1000)).}
 
-\item{color.scale.colors}{A vector of two colors used to create the color palette gradient.}
+\item{color.scale.colors}{A vector of two colors used to create the color palette gradient default (c("white", "navyblue")).}
 }
 \value{
 A heatmap stored in a ggplot object.
@@ -32,8 +32,8 @@ Generates a heatmap of the distribution of sequences between two populations. In
 indicates the number of sequences present in x males, on the horizontal axis, and y females, on the vertical axis.
 }
 \examples{
-heatmap = sex_distribution_heatmap(data, title="Distribution of sequences between sexes",
-                                   significance.color="blue", significance.threshold=0.01,
-                                   color.scale.bins=c(0, 10, 100, 1000),
-                                   color.scale.colors=c("white", "red3"))
+heatmap <- sex_distribution_heatmap(data, title = "Distribution of sequences between sexes",
+                                    significance.color = "blue", significance.threshold = 0.01,
+                                    color.scale.bins = c(0, 10, 100, 1000),
+                                    color.scale.colors = c("white", "red3"))
 }

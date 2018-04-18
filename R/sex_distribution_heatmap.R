@@ -5,30 +5,30 @@
 #'
 #' @param data A table of distribution of sequences between sexes obtained with the \code{\link{load_sex_distribution_table}} function.
 #'
-#' @param title Plot title.
+#' @param title Plot title (default NULL).
 #'
-#' @param show.significance If TRUE, tiles with significant association with sex are highlighted with the color defined in the significance.color parameter.
+#' @param show.significance If TRUE, tiles with significant association with sex are highlighted with the color defined in the significance.color parameter (default TRUE).
 #'
-#' @param significance.color Color of the border for tiles significantly associated with sex.
+#' @param significance.color Color of the border for tiles significantly associated with sex (default "red3").
 #'
-#' @param significance.threshold P-value threshold to consider a tile significantly associated with sex.
+#' @param significance.threshold P-value threshold to consider a tile significantly associated with sex (default 0.05).
 #'
-#' @param color.scale.bins A vector of values to use as bins in the color palette.
+#' @param color.scale.bins A vector of values to use as bins in the color palette (default c(0, 1, 5, 25, 100, 1000)).
 #'
-#' @param color.scale.colors A vector of two colors used to create the color palette gradient.
+#' @param color.scale.colors A vector of two colors used to create the color palette gradient default (c("white", "navyblue")).
 #'
 #' @return A heatmap stored in a ggplot object.
 #'
 #' @examples
-#' heatmap = sex_distribution_heatmap(data, title="Distribution of sequences between sexes",
-#'                                    significance.color="blue", significance.threshold=0.01,
-#'                                    color.scale.bins=c(0, 10, 100, 1000),
-#'                                    color.scale.colors=c("white", "red3"))
+#' heatmap <- sex_distribution_heatmap(data, title = "Distribution of sequences between sexes",
+#'                                     significance.color = "blue", significance.threshold = 0.01,
+#'                                     color.scale.bins = c(0, 10, 100, 1000),
+#'                                     color.scale.colors = c("white", "red3"))
 
 
-sex_distribution_heatmap <- function(data, title=NULL,
-                                     show.significance=TRUE, significance.color="red3", significance.threshold=0.05,
-                                     color.scale.bins=c(0, 1, 5, 25, 100, 1000), color.scale.colors=c("white", "navyblue")) {
+sex_distribution_heatmap <- function(data, title = NULL,
+                                     show.significance = TRUE, significance.color = "red3", significance.threshold = 0.05,
+                                     color.scale.bins = c(0, 1, 5, 25, 100, 1000), color.scale.colors = c("white", "navyblue")) {
 
     # Check that parameters were input correctly
     if (length(color.scale.bins) < 2) {
@@ -73,21 +73,20 @@ sex_distribution_heatmap <- function(data, title=NULL,
     # Add highlight to significant tiles if specified
     if (show.significance) {
         heatmap <- heatmap +
-            ggplot2::geom_tile(data=data$data, ggplot2::aes(x=Males, y=Females, color=Significant), fill="NA", size=0.4) +
-            ggplot2::scale_color_manual(name=ggplot2::element_blank(), values=c("TRUE"=significance.color, "FALSE"="NA", color_palette), breaks = c("TRUE"), labels = c("Signif."))
+            ggplot2::geom_tile(data = data$data, ggplot2::aes(x = Males, y = Females, color = Significant), fill = "NA", size = 0.4) +
+            ggplot2::scale_color_manual(name = ggplot2::element_blank(), values = c("TRUE"=significance.color, "FALSE"="NA", color_palette),
+                                        breaks = c("TRUE"), labels = c("Signif."))
     }
 
     # Add title if specified
     if (!is.null(title)) {
         heatmap <- heatmap +
             ggplot2::ggtitle(title) +
-            ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size=20, face="bold", margin = margin(0, 0, 10, 0)))
+            ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size = 20, face = "bold", margin = margin(0, 0, 10, 0)))
     } else {
         heatmap <- heatmap +
             ggplot2::theme(plot.title = ggplot2::element_blank())
     }
-
-    return(heatmap)
 }
 
 
@@ -106,15 +105,17 @@ sex_distribution_heatmap <- function(data, title=NULL,
 generate_color_palette <- function(color.scale.bins, color.scale.colors) {
 
     bin_labels <- c()
+
     # Create names for all bins except the last. Names are the bin value if the bin has size 1, or an interval if the bin has size > 1
     for (i in 1:(length(color.scale.bins) - 1)) {
         if (color.scale.bins[i] == color.scale.bins[i + 1] - 1) {
             temp <- as.character(color.scale.bins[i])
         } else {
-            temp <- paste(as.character(color.scale.bins[i]), as.character(color.scale.bins[i + 1] - 1), sep="-")
+            temp <- paste(as.character(color.scale.bins[i]), as.character(color.scale.bins[i + 1] - 1), sep = "-")
         }
         bin_labels <- c(bin_labels, temp)
     }
+
     # Last bin is special ("> last bin")
     bin_labels <- c(bin_labels, paste0(">", as.character(color.scale.bins[length(color.scale.bins)])))
 

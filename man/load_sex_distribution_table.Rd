@@ -19,5 +19,5 @@ A list with the following elements:
 Loads a table of distribution of sequences between sexes obtained with RADSex sex_distribution.
 }
 \examples{
-data = load_sex_distribution_table(input_file_path)
+data <- load_sex_distribution_table("sex_distribution_table.tsv")
 }

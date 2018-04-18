@@ -67,7 +67,7 @@ coverage_heatmap <- function(data, popmap=NULL, title=NULL,
               legend.text = ggplot2::element_text(size = 11),
               legend.key.height = ggplot2::unit(0.1, "npc"),
               legend.key.width = ggplot2::unit(0.06, "npc")) +
-        ggplot2::scale_fill_gradientn(name = "Cov.", colours = coverage.palette, values = c(0, 0.00001, data$distribution[4]/data$distribution[6], data$distribution[5]/data$distribution[6], 1)) +
+        ggplot2::scale_fill_gradientn(name = "Cov.", colours = coverage.palette, values = c(0, 0.00001, data$distribution[3]/data$distribution[6], data$distribution[5]/data$distribution[6], 1)) +
         ggplot2::scale_x_discrete(expand = c(0, 0)) +
         ggplot2::scale_y_discrete(expand = c(0, 0))
 

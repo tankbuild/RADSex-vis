@@ -4,8 +4,8 @@
 \alias{mapping_contig}
 \title{Mapping contig}
 \usage{
-mapping_contig(data, contig, region = NULL, signif.threshold = 0.05,
-  point.size = 1.5, color.sex.bias = TRUE,
+mapping_contig(data, contig, region = NULL, title = NULL,
+  signif.threshold = 0.05, point.size = 1.5, color.sex.bias = TRUE,
   sex.bias.palette = c("firebrick1", "grey10", "dodgerblue2"))
 }
 \arguments{
@@ -14,6 +14,8 @@ mapping_contig(data, contig, region = NULL, signif.threshold = 0.05,
 \item{contig}{Name of the contig to plot.}
 
 \item{region}{A vector of two integers specifying the region of the contig to plot (default NULL).}
+
+\item{title}{Title of the plot (default NULL).}
 
 \item{signif.threshold}{Significance threshold for association with sex (default 0.05).}
 

@@ -10,6 +10,8 @@
 #'
 #' @param region A vector of two integers specifying the region of the contig to plot (default NULL).
 #'
+#' @param title Title of the plot (default NULL).
+#'
 #' @param signif.threshold Significance threshold for association with sex (default 0.05).
 #'
 #' @param point.size Size of a point in the plot (default 1.5).
@@ -27,9 +29,8 @@
 #' contig_plot <- mapping_contig(data, "LG05", region = c(1500000, 2500000), point.size = 1, color.sex.bias = FALSE)
 
 
-mapping_contig <- function(data, contig, region = NULL,
-                           signif.threshold = 0.05,
-                           point.size = 1.5,
+mapping_contig <- function(data, contig, region = NULL, title = NULL,
+                           signif.threshold = 0.05, point.size = 1.5,
                            color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "grey10", "dodgerblue2")) {
 
 
@@ -78,11 +79,19 @@ mapping_contig <- function(data, contig, region = NULL,
                                                 limits = c(-1, 1))
     }
 
+    # Add title if specified
+    if (!is.null(title)) {
+        g <- g + ggplot2::ggtitle(title) +
+            ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size = 20, face = "bold", margin = ggplot2::margin(0, 0, 10, 0)))
+    } else {
+        g <- g + ggplot2::theme(plot.title = ggplot2::element_blank())
+    }
+
     # Generate the bottome plot (probability of association with sex)
     h <- ggplot2::ggplot(contig_data, ggplot2::aes(x = Position, y = P)) +
         cowplot::theme_cowplot() +
         ggplot2::geom_point(size = point.size, color = "grey20") +
-        ggplot2::scale_y_continuous(name = expression(paste0('-log'['10'], '(p'['Association with sex'], ')')),
+        ggplot2::scale_y_continuous(name = expression(paste('-log'['10'], '(p'['Association with sex'], ')', sep = "")),
                                     limits = c(0, max(contig_data$P, 1.25 * signif.threshold))) +
         ggplot2::geom_hline(yintercept = signif.threshold, color = "red3", lty = 1, lwd = 1) +
         ggplot2::annotate("text", x = x_limits[1] + 0.05 * (x_limits[2] - x_limits[1]), y = signif.threshold + 0.075 * max(contig_data$P, 1.25 * signif.threshold),
@@ -90,7 +99,15 @@ mapping_contig <- function(data, contig, region = NULL,
         x_scale
 
     # Combine the two plots
-    combined <- cowplot::plot_grid(g, h, ncol = 1, align = "v")
+    if (!is.null(title)) {
+
+        combined <- cowplot::plot_grid(g, h, ncol = 1, align = "v", rel_heights = c(1.1, 1))
+
+    } else {
+
+        combined <- cowplot::plot_grid(g, h, ncol = 1, align = "v")
+
+    }
 
     return(combined)
 }
@@ -119,7 +136,7 @@ generate_x_scale <- function(region, contig_name) {
         bp_unit <- "M"
     }
 
-    output <- ggplot2::scale_x_continuous(name = paste0("Position on ", contig_name, " (", bp_unit, "bp.)"),
+    output <- ggplot2::scale_x_continuous(name = paste0("Position on ", contig_name, " (", bp_unit, "bp)"),
                                           breaks = scale, labels = scale_labels, limits = c(min(scale[1], region[1]), max(tail(scale, 1), region[2])))
 
     return(output)

@@ -49,16 +49,12 @@
 #' @param sector.title.expand A factor that controls the distance between sector titles and sector top axes (default 1.9).
 #'
 #' @examples
-#' plot_genome(mapping_file_path, contig_lengths_file_path, chromosomes_names_file_path = chromosomes_names_file_path, plot.unplaced=TRUE,
-#'             output_file_path = NULL, width = 1400, height = 1400, res = 100,
-#'             highlight=NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
-#'             base.color = "white", highlight.color = "grey80", point.size = 0.5,
-#'             color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
-#'             color.unmapped = TRUE, unmapped.palette = c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30"),
-#'             signif.threshold = 0.05, sector.titles.expand = 1.9)
+#' plot_genome("mapping_results.tsv", "contig_lengths.tsv", chromosomes_names_file_path = "chromosomes_names.tsv",
+#'             output_file_path = "mapping_results.png", highlight = c("LG24"), zoom.highlights = TRUE, zoom.ratio = 4, point.size = 0.25,
+#'             color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "grey10", "dodgerblue2"), color.unmapped = FALSE)
 #'
 
-plot_genome <- function(mapping_file_path, contig_lengths_file_path, chromosomes_names_file_path = chromosomes_names_file_path, plot.unplaced = TRUE,
+plot_genome <- function(mapping_file_path, contig_lengths_file_path, chromosomes_names_file_path = NULL, plot.unplaced = TRUE,
                         output_file_path = NULL, width = 1400, height = 1400, res = 100,
                         highlight = NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
                         base.color = "white", highlight.color = "grey80", point.size = 0.5,
@@ -75,8 +71,10 @@ plot_genome <- function(mapping_file_path, contig_lengths_file_path, chromosomes
         stop(paste0("The specified contig lengths file (", contig_lengths_file_path, ") does not exist."))
     }
 
-    if (!file.exists(chromosomes_names_file_path)) {
-        stop(paste0("The specified chromosomes names file (", chromosomes_names_file_path, ") does not exist."))
+    if (!is.null(chromosomes_names_file_path)) {
+        if (!file.exists(chromosomes_names_file_path)) {
+            stop(paste0("The specified chromosomes names file (", chromosomes_names_file_path, ") does not exist."))
+        }
     }
 
     # Load input files

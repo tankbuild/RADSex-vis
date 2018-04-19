@@ -10,7 +10,7 @@ load_contig_names(input_file_path)
 \item{input_file_path}{Path to a contig names file.}
 }
 \value{
-A vector with contigs as names and contig names as values.
+A vector with contigs as names and contig names as values, or NULL if there is no input file
 }
 \description{
 Loads a table of contig names.

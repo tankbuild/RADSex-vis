@@ -45,8 +45,7 @@ sex_distribution_heatmap <- function(data, title = NULL,
     data$data$Bin <- factor(unlist(lapply(data$data$Sequences, function(x) names(color_palette)[tail(which(x >= color.scale.bins), n=1)])), levels = names(color_palette))
 
     # Check if tile is significant by comparing to significance threshold
-    data$data$Significant <- unlist(lapply(data$data$'P', function(x) x < significance.threshold))
-    data$data$Significant <- as.factor(data$data$Significant & (data$data$Sequences > 0))
+    data$data$Signif <- as.factor(data$data$Signif & (data$data$Sequences > 0))
 
     # Generate the plot
     heatmap <- ggplot2::ggplot(data$data, ggplot2::aes(x = Males, y = Females)) +
@@ -73,7 +72,7 @@ sex_distribution_heatmap <- function(data, title = NULL,
     # Add highlight to significant tiles if specified
     if (show.significance) {
         heatmap <- heatmap +
-            ggplot2::geom_tile(data = data$data, ggplot2::aes(x = Males, y = Females, color = Significant), fill = "NA", size = 0.4) +
+            ggplot2::geom_tile(data = data$data, ggplot2::aes(x = Males, y = Females, color = Signif), fill = "NA", size = 0.4) +
             ggplot2::scale_color_manual(name = ggplot2::element_blank(), values = c("TRUE"=significance.color, "FALSE"="NA", color_palette),
                                         breaks = c("TRUE"), labels = c("Signif."))
     }

@@ -32,8 +32,12 @@
 #'
 #' @param sector.title.expand A factor that controls the distance between sector titles and sector top axes (default 2).
 #'
-#'
 #' @examples
+#'
+#' contig_lengths <- load_contig_lengths("contig_lengths.tsv")
+#' contig_names <- load_contig_names("contig_names.tsv")
+#' data <- load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
+#'
 #' mapping_circular_plot(data,
 #'                       highlight = NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
 #'                       base.color = "white", highlight.color = "grey80", point.size = 0.5,

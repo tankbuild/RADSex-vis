@@ -28,5 +28,5 @@ Loads a table of mapping results obtained with the RADSex mapping module.
 \examples{
 contig_lengths <- load_contig_lengths("contig_lengths.tsv")
 contig_names <- load_contig_names("contig_names.tsv")
-data = load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
+data <- load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
 }

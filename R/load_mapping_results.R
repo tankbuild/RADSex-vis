@@ -87,6 +87,8 @@ load_mapping_results <- function(input_file_path, contig_lengths, contig_names =
     # Negative log transform p values
     data$P <- -log(data$P, 10)
 
+    lengths <- lengths[gtools::mixedorder(names(lengths))]
+
     # Generate output list
     output <- list(data = data, lengths = lengths, names = contig_names)
 

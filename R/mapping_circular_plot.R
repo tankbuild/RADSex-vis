@@ -26,7 +26,7 @@
 #'
 #' @param color.unmapped If TRUE, unmapped scaffolds will be colored with alternating colors, similar to a manhattan plot (default TRUE).
 #'
-#' @param unmapped.paltte A named vector of three colors: "0" = alternating color 1, "1" = alternating color2, and "2" = color for mapped scaffolds (default c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30")).
+#' @param unmapped.palette A named vector of three colors: "0" = alternating color 1, "1" = alternating color2, and "2" = color for mapped scaffolds (default c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30")).
 #'
 #' @param signif.threshold Significance threshold for association with sex (default 0.05).
 #'
@@ -34,9 +34,7 @@
 #'
 #' @examples
 #'
-#' contig_lengths <- load_contig_lengths("contig_lengths.tsv")
-#' contig_names <- load_contig_names("contig_names.tsv")
-#' data <- load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
+#' data <- load_mapping_results("mapping_results.tsv", "contig_lengths.tsv", contig_names = "contig_names.tsv", plot.unplaced = FALSE)
 #'
 #' mapping_circular_plot(data,
 #'                       highlight = NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",
@@ -56,9 +54,9 @@ mapping_circular_plot <- function(data,
     signif.threshold <- -log(signif.threshold / dim(data$data)[1], 10)
 
     # Get sector information
-    n_sectors <- length(data$lengths)
-    sectors <- names(data$lengths)
-    sector_width <- data$lengths
+    n_sectors <- length(data$lengths$plot)
+    sectors <- names(data$lengths$plot)
+    sector_width <- data$lengths$plot
     if (!is.null(data$names)) {
         sector_names <- data$names
     } else {
@@ -71,8 +69,8 @@ mapping_circular_plot <- function(data,
         to_remove <- c()
         for (i in 1:length(highlight)) {
             if (!(highlight[i] %in% sectors)) {
-                if (!is.null(data$names) & highlight[i] %in% data$names) {
-                    highlight[i] <- names(data$names[which(data$names == highlight[i])])
+                if (highlight[i] %in% sector_names) {
+                    highlight[i] <- names(sector_names[which(sector_names == highlight[i])])
                 } else {
                     warning(paste0("Could not find sector \"", highlight[i], "\" given by parameter \"highlight\"."))
                     to_remove <- c(to_remove, i)
@@ -88,9 +86,9 @@ mapping_circular_plot <- function(data,
         zoom_data <- data$data[data$data$Contig %in% highlight, , drop = FALSE]  # Extract zoomed sectors data
         zoom_data$Contig <- paste0(zoom_data$Contig, zoom.suffix)  # Edit zoomed sector names with suffix
         data$data <- rbind(data$data, zoom_data)  # Combine base sectors data and zoomed sectors data
-        zoom_lengths <- data$lengths[highlight]  # Extract zoomed sector lengths
+        zoom_lengths <- data$lengths$plot[highlight]  # Extract zoomed sector lengths
         names(zoom_lengths) <- paste0(highlight, zoom.suffix)  # Eddit zoomed sector names with suffix
-        data$lengths <- c(data$lengths, zoom_lengths)  # Combine base sectors lengths and zoomed sectors lengths
+        data$lengths$plot <- c(data$lengths$plot, zoom_lengths)  # Combine base sectors lengths and zoomed sectors lengths
         sectors <- c(sectors, paste0(highlight, zoom.suffix))  # Update sectors list
         n_sectors <- n_sectors + length(highlight)  # Update sectors count
         sector_width <- c(sector_width, zoom_lengths * zoom.ratio)  # Update sector widths
@@ -105,7 +103,7 @@ mapping_circular_plot <- function(data,
     bgs[which(sectors %in% paste0(highlight, zoom.suffix))] <- highlight.color
 
     # Create sector lengths matrix
-    sector_lengths <- matrix(c(rep(0, n_sectors), data$lengths), ncol=2)
+    sector_lengths <- matrix(c(rep(0, n_sectors), data$lengths$plot), ncol=2)
 
     # Setup gaps between sectors
     gaps <- rep(1, n_sectors)

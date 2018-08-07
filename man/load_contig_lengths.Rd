@@ -4,17 +4,27 @@
 \alias{load_contig_lengths}
 \title{Load a contig lengths file}
 \usage{
-load_contig_lengths(input_file_path)
+load_contig_lengths(input_file_path, contig_names = NULL,
+  plot.unplaced = TRUE)
 }
 \arguments{
 \item{input_file_path}{Path to a contig lengths file.}
+
+\item{contig_names}{A vector of contig names obtained with the \code{\link{load_contig_names}} function (default NULL).}
+
+\item{plot.unplaced}{If TRUE, unplaced scaffolds will be grouped together and plotted as "Unplaced" (default: TRUE).}
 }
 \value{
-A vector with contigs as names and lengths as values.
+A list with the following elements:
+- lg : lengths of contigs determined to be chromosomes
+- unplaced : lengths of contigs determined to be unplaced
+- plot : lengths of sectors to be plotted
 }
 \description{
-Loads a table of contig lengths.
+Loads a table of contig lengths. The function separates the lengths of chromosomes and unplaced contigs
+If chromosomes names are provided, they will be used to determine the chromosomes. Otherwise, the function will attempt to detect
+chromosomes based on contig names (chromosomes start with LG / Chr / NC).
 }
 \examples{
-lengths <- load_contig_lengths("contig_lengths.tsv")
+lengths <- load_contig_lengths("contig_lengths.tsv", contig_names = contig_names)
 }

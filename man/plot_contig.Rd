@@ -20,8 +20,8 @@ plot_contig(mapping_file_path, contig_lengths_file_path, contig,
 \item{region}{A vector of two integers specifying the region of the contig to plot (default NULL).}
 
 \item{chromosomes_names_file_path}{Path to a chromosomes names file, i.e. a tabulated file with name in the reference genome file as the first column and
-corresponding chromosome name (starting with "LG" or "chr", case unsensitive) as the second column. If the chromosomes names in the reference genome file
-already start with "LG" or "chr", there is no need for a chromosomes names file (default NULL).}
+corresponding chromosome name as the second column. If the chromosomes names in the reference genome file start with "LG", "NC", or "CHR" (case unsensitive),
+chromosomes can be detected automatically (default NULL).}
 
 \item{title}{Title of the plot (default NULL).}
 

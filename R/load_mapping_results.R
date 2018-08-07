@@ -2,95 +2,78 @@
 #'
 #' @description Loads a table of mapping results obtained with the RADSex mapping module.
 #'
-#' @param input_file_path Path to a mapping results file.
+#' @param input_file_path Path to a mapping results file from RADSex map.
 #'
-#' @param contig_lengths A vector of contig lengths obtained with the \code{\link{load_contig_lengths}} function.
+#' @param contig_lengths_file_path Path to a contig lengths file from RADSex map.
 #'
-#' @param contig_names A vector of contig names obtained with the \code{\link{load_contig_names}} function (default NULL).
+#' @param contig_names_file_path Path to a file containing the chromosomes names.
 #'
-#' @param plot.unplaced If TRUE, unplaced contigs will be plotted as a supercontig (default TRUE).
+#' @param plot.unplaced If TRUE, unplaced scaffolds will be grouped together and plotted as "Unplaced" (default: TRUE).
 #'
 #' @return A list with the following elements:
 #' \item{data}{A data frame of the mapping results.}
-#' \item{lengths}{A vector with plotted contigs as names and lengths as values}
+#' \item{lengths}{The contig lengths.}
 #' \item{names}{A vector with reference contigs names as names and corresponding contig names as values}
 #'
 #' @examples
-#' contig_lengths <- load_contig_lengths("contig_lengths.tsv")
-#' contig_names <- load_contig_names("contig_names.tsv")
-#' data <- load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
+#' data <- load_mapping_results("mapping_results.tsv", contig_lengths_file_path = 'contig_lengths.tsv',
+#'                              contig_names_file_path = 'contig_names.tsv')
 
 
-load_mapping_results <- function(input_file_path, contig_lengths, contig_names = NULL, plot.unplaced = TRUE) {
+load_mapping_results <- function(input_file_path, contig_lengths_file_path, contig_names_file_path = NULL, plot.unplaced = TRUE) {
+
+    output <- list()
+
+    print(" - Loading contig names file")
+    output$names <- load_contig_names(contig_names_file_path)
+
+    print(" - Loading contig lengths file")
+    output$lengths <- load_contig_lengths(contig_lengths_file_path, contig_names = output$names, plot.unplaced = plot.unplaced)
 
     data <- suppressMessages(readr::read_delim(input_file_path, "\t", escape_double = FALSE, trim_ws = TRUE))
-
-    if (!is.null(contig_names)) {  # If contig names are specified, separate the data based on them
-
-        lg_data <- subset(data, data$Contig %in% names(contig_names))
-        unplaced_data <- subset(data, !(data$Contig %in% names(contig_names)))
-
-    } else {  # If contig names are not specified, try to separate the data based on contig names starting with LG
-
-        lg_data <- subset(data, substr(data$Contig, 1, 2) == "LG")
-        unplaced_data <- subset(data, !(substr(data$Contig, 1, 2) %in% c("LG", "MT")))
-
-    }
+    data_lg <- subset(data, data$Contig %in% names(output$lengths$lg))
+    data_unplaced <- subset(data, data$Contig %in% names(output$lengths$unplaced))
 
     # If lgs were found, sort them and set their color index to 2 (for the plotting later)
-    if (dim(lg_data)[1] > 0) {
+    if (dim(data_lg)[1] > 0) {
 
-        lg_data$Contig <- factor(lg_data$Contig, levels = gtools::mixedsort(unique(lg_data$Contig)))
-        lg_data$Color <- rep(2, dim(lg_data)[1])
-        lengths <- c(contig_lengths[which(names(contig_lengths) %in% lg_data$Contig)])
+        data_lg$Color <- rep(2, dim(data_lg)[1])
 
-    } else {
-
-        lengths <- c()
     }
 
-    if (plot.unplaced & dim(lg_data)[1] != dim(data)[1]) {  # If plot.unplaced is specified and there are unplaced contigs (not just LGs)
+    if (plot.unplaced & dim(data_unplaced)[1] > 0) {  # If plot.unplaced is specified and there are unplaced contigs (not just LGs)
 
-        unplaced_data <- unplaced_data[order(unplaced_data$Contig, unplaced_data$Position), ]  # Order by contig first and by position on the contig second
+        # Order unplaced contigs data by contig length and then by position on the contig
+        data_unplaced <- data_unplaced[order(match(data_unplaced$Contig, names(output$lengths$unplaced)), data_unplaced$Position), ]
 
         # Attribute a color index to each unplaced contig, alternating between 0 and 1
-        order <- seq(1, length(unique(unplaced_data$Contig)))
-        names(order) <- unique(unplaced_data$Contig)
-        unplaced_data$Color <- order[unplaced_data$Contig] %% 2
-
-        # Find lengths of unplaced contigs
-        unplaced_lengths <- contig_lengths[which(names(contig_lengths) %in% names(order))]
+        order <- seq(1, length(unique(data_unplaced$Contig)))
+        names(order) <- unique(data_unplaced$Contig)
+        data_unplaced$Color <- order[data_unplaced$Contig] %% 2
 
         # Transform position on each contig into position on cumulated contig
-        temp <- cumsum(unplaced_lengths) - unplaced_lengths[1]
-        unplaced_data$Position <- unplaced_data$Position + temp[unplaced_data$Contig]
-        unplaced_data$Contig <- "unplaced"
+        temp <- cumsum(output$lengths$unplaced) - output$lengths$unplaced[1]
+        data_unplaced$Original_position <- data_unplaced$Position
+        data_unplaced$Position <- data_unplaced$Position + temp[data_unplaced$Contig]
+        data_unplaced$Contig_id <- data_unplaced$Contig
+        data_unplaced$Contig <- "Unplaced"
 
         # Regroup data into one data frame
-        data <- rbind(lg_data, unplaced_data)
-
-        lengths <- c(lengths, "unplaced"=sum(unplaced_lengths))
+        data_lg$Contig_id <- data_lg$Contig
+        data_lg$Original_position <- data_lg$Position
+        data <- rbind(data_lg, data_unplaced)
+        data$Contig <- factor(data$Contig, levels = c(names(output$lengths$lg), "Unplaced"))
 
     } else {
 
         # If plot.unplaced was not specified or unplaced contigs were not found, only plot data for LGs
-        data <- lg_data
+        data <- data_lg
+        data$Contig <- factor(data$Contig, levels = names(output$lengths$lg))
 
     }
 
-    if (!is.null(contig_names)) {
-        contig_names <- c(contig_names, "unplaced"="Unplaced")
-    }
-
-    data$Color <- as.integer(data$Color)
-
-    # Negative log transform p values
     data$P <- -log(data$P, 10)
-
-    lengths <- lengths[gtools::mixedorder(names(lengths))]
-
-    # Generate output list
-    output <- list(data = data, lengths = lengths, names = contig_names)
+    output$data <- data
 
     return(output)
 }

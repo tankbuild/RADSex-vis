@@ -21,56 +21,68 @@
 #' @param sex.bias.palette A vector of three colors defining the sex-bias track palette: female-biased, neutral, male-biased. (default c("firebrick1", "black", "dodgerblue2"))
 #'
 #' @examples
-#'
-#' contig_lengths <- load_contig_lengths("contig_lengths.tsv")
-#' contig_names <- load_contig_names("contig_names.tsv")
-#' data <- load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
-#'
-#' contig_plot <- mapping_contig(data, "LG05", region = c(1500000, 2500000), point.size = 1, color.sex.bias = FALSE)
+#' data <- load_mapping_results("mapping_results.tsv", contig_lengths_file_path = 'contig_lengths.tsv',
+#'                              contig_names_file_path = 'contig_names.tsv')
+#'#' contig_plot <- mapping_contig(data, "LG05", region = c(1500000, 2500000), point.size = 1, color.sex.bias = FALSE)
 
 
 mapping_contig <- function(data, contig, region = NULL, title = NULL,
                            signif.threshold = 0.05, point.size = 1.5,
                            color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "grey10", "dodgerblue2")) {
 
+    # Getting contig information
 
-    # Check if the contig exists in the mapping results
-    if (contig %in% names(data$lengths)) {
+    if (contig %in% data$names) {
 
-        contig_name <- contig  # If the contig name was specified as the ID in the reference genome, save it as it is
+        # Case of contig = "LG05"
+        contig_name <- contig
+        contig <- names(data$names[which(data$names == contig)])
 
-    } else if (!is.null(data$names) & contig %in% data$names) {
+    } else if (contig %in% names(data$names)) {
 
-        contig_name <- names(data$names)[which(data$names == contig)]  # If the contig name was specified as one of the chromosomes names, save the corresponding ID
+        # Case of contig = "NC_0215354.2"
+        contig_name <- data$names[which(names(data$names) == contig)]
+
+    } else if (contig %in% c(names(data$lengths$unplaced), names(data$lengths$lg))) {
+
+        # Case of unplaced scaffold or no contig names
+        contig_name <- contig
 
     } else {
 
-        stop(paste0("Could not find contig \"", contig , "\"."))
+        stop(paste0(" - Error: contig \"", contig, "\" does not exist."))
 
     }
 
     # Adjust significance threshold for bonferroni correction
     signif.threshold <- -log(signif.threshold / dim(data$data)[1], 10)
 
-    # Get contig info
-    x_limits <- c(0, data$lengths[contig_name])
-    contig_data <- subset(data$data, data$data$Contig == contig_name)
-
-    # Adjust contig info if a region was specified
-    if (!is.null(region)) {
-        x_limits <- region
-        contig_data <- subset(contig_data, contig_data$Position >= region[1] & contig_data$Position <= region[2])
+    # Setting region to entire contig if region is NULL
+    if (is.null(region)) {
+        if (contig %in% names(data$lengths$lg)) {
+            region <- c(0, data$lengths$lg[[contig]])
+        } else if (contig %in% names(data$lengths$unplaced)){
+            region <- c(0, data$lengths$unplaced[[contig]])
+        } else {
+            stop(paste0(" - Error: could not find length for contig \"", contig, "\"."))
+        }
     }
 
+    # Extract region from contig data
+    contig_data <- subset(data$data, data$data$Contig_id == contig &
+                              data$data$Original_position >= region[1] &
+                              data$data$Original_position <= region[2])
+
     # Generate a good x axis scale according to the size of the region
-    x_scale <- generate_x_scale(x_limits, contig)
+    x_scale <- generate_x_scale(region, contig_name)
 
     # Generate the top plot (sex bias)
-    g <- ggplot2::ggplot(contig_data, ggplot2::aes(x = Position, y = SexBias, color = SexBias)) +
+    g <- ggplot2::ggplot(contig_data, ggplot2::aes(x = Original_position, y = SexBias, color = SexBias)) +
         cowplot::theme_cowplot() +
         ggplot2::geom_point(size = point.size) +
         ggplot2::scale_y_continuous(name = "Sex Bias", limits = c(-1, 1)) +
         ggplot2::theme(axis.title.x = ggplot2::element_blank(), legend.position = "none") +
+        ggplot2::geom_hline(yintercept = 0, linetype = 3, color = "grey50") +
         x_scale
 
     # Add color scale if specified
@@ -88,13 +100,13 @@ mapping_contig <- function(data, contig, region = NULL, title = NULL,
     }
 
     # Generate the bottome plot (probability of association with sex)
-    h <- ggplot2::ggplot(contig_data, ggplot2::aes(x = Position, y = P)) +
+    h <- ggplot2::ggplot(contig_data, ggplot2::aes(x = Original_position, y = P)) +
         cowplot::theme_cowplot() +
         ggplot2::geom_point(size = point.size, color = "grey20") +
         ggplot2::scale_y_continuous(name = expression(paste('-log'['10'], '(p'['Association with sex'], ')', sep = "")),
                                     limits = c(0, max(contig_data$P, 1.25 * signif.threshold))) +
         ggplot2::geom_hline(yintercept = signif.threshold, color = "red3", lty = 1, lwd = 1) +
-        ggplot2::annotate("text", x = x_limits[1] + 0.05 * (x_limits[2] - x_limits[1]), y = signif.threshold + 0.075 * max(contig_data$P, 1.25 * signif.threshold),
+        ggplot2::annotate("text", x = region[1] + 0.05 * (region[2] - region[1]), y = signif.threshold + 0.075 * max(contig_data$P, 1.25 * signif.threshold),
                           label = "p = 0.05", color = "red3", size = 5) +
         x_scale
 

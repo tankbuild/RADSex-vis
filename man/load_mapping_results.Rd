@@ -4,29 +4,28 @@
 \alias{load_mapping_results}
 \title{Load a mapping results file}
 \usage{
-load_mapping_results(input_file_path, contig_lengths, contig_names = NULL,
-  plot.unplaced = TRUE)
+load_mapping_results(input_file_path, contig_lengths_file_path,
+  contig_names_file_path = NULL, plot.unplaced = TRUE)
 }
 \arguments{
-\item{input_file_path}{Path to a mapping results file.}
+\item{input_file_path}{Path to a mapping results file from RADSex map.}
 
-\item{contig_lengths}{A vector of contig lengths obtained with the \code{\link{load_contig_lengths}} function.}
+\item{contig_lengths_file_path}{Path to a contig lengths file from RADSex map.}
 
-\item{contig_names}{A vector of contig names obtained with the \code{\link{load_contig_names}} function (default NULL).}
+\item{contig_names_file_path}{Path to a file containing the chromosomes names.}
 
-\item{plot.unplaced}{If TRUE, unplaced contigs will be plotted as a supercontig (default TRUE).}
+\item{plot.unplaced}{If TRUE, unplaced scaffolds will be grouped together and plotted as "Unplaced" (default: TRUE).}
 }
 \value{
 A list with the following elements:
 \item{data}{A data frame of the mapping results.}
-\item{lengths}{A vector with plotted contigs as names and lengths as values}
+\item{lengths}{The contig lengths.}
 \item{names}{A vector with reference contigs names as names and corresponding contig names as values}
 }
 \description{
 Loads a table of mapping results obtained with the RADSex mapping module.
 }
 \examples{
-contig_lengths <- load_contig_lengths("contig_lengths.tsv")
-contig_names <- load_contig_names("contig_names.tsv")
-data <- load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
+data <- load_mapping_results("mapping_results.tsv", contig_lengths_file_path = 'contig_lengths.tsv',
+                             contig_names_file_path = 'contig_names.tsv')
 }

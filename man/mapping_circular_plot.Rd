@@ -6,11 +6,11 @@
 \usage{
 mapping_circular_plot(data, highlight = NULL, zoom.highlights = FALSE,
   zoom.ratio = 2, zoom.suffix = " (zoom)", base.color = "white",
-  highlight.color = "grey80", point.size = 0.5, color.sex.bias = TRUE,
-  sex.bias.palette = c("firebrick1", "black", "dodgerblue2"),
-  color.unmapped = TRUE, unmapped.palette = c(`0` = "dodgerblue3", `1` =
-  "goldenrod1", `2` = "grey30"), signif.threshold = 0.05,
-  sector.titles.expand = 1.9)
+  highlight.color = "grey80", point.size = 0.5,
+  color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "black",
+  "dodgerblue2"), color.unmapped = TRUE, unmapped.palette = c(`0` =
+  "dodgerblue3", `1` = "goldenrod1", `2` = "grey30"),
+  signif.threshold = 0.05, sector.titles.expand = 1.9)
 }
 \arguments{
 \item{data}{A list of mapping results obtained with the \code{\link{load_mapping_results}} function.}
@@ -33,11 +33,11 @@ mapping_circular_plot(data, highlight = NULL, zoom.highlights = FALSE,
 
 \item{color.unmapped}{If TRUE, unmapped scaffolds will be colored with alternating colors, similar to a manhattan plot (default TRUE).}
 
+\item{unmapped.palette}{A named vector of three colors: "0" = alternating color 1, "1" = alternating color2, and "2" = color for mapped scaffolds (default c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30")).}
+
 \item{signif.threshold}{Significance threshold for association with sex (default 0.05).}
 
 \item{highlights}{A vector of scaffolds to highlight: c("LG1", "LG7", "scaffold_8") ... (default NULL).}
-
-\item{unmapped.paltte}{A named vector of three colors: "0" = alternating color 1, "1" = alternating color2, and "2" = color for mapped scaffolds (default c("0"="dodgerblue3", "1"="goldenrod1", "2"="grey30")).}
 
 \item{sector.title.expand}{A factor that controls the distance between sector titles and sector top axes (default 2).}
 }
@@ -48,9 +48,7 @@ probability of association with sex of a sequence.
 }
 \examples{
 
-contig_lengths <- load_contig_lengths("contig_lengths.tsv")
-contig_names <- load_contig_names("contig_names.tsv")
-data <- load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
+data <- load_mapping_results("mapping_results.tsv", "contig_lengths.tsv", contig_names = "contig_names.tsv", plot.unplaced = FALSE)
 
 mapping_circular_plot(data,
                       highlight = NULL, zoom.highlights = FALSE, zoom.ratio = 2, zoom.suffix = " (zoom)",

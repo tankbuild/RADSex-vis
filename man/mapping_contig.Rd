@@ -31,10 +31,7 @@ position on the contig, and the bottom plot shows probability of association wit
 A specific region of the contig can also be plotted.
 }
 \examples{
-
-contig_lengths <- load_contig_lengths("contig_lengths.tsv")
-contig_names <- load_contig_names("contig_names.tsv")
-data <- load_mapping_results("mapping_results.tsv", contig_lengths, contig_names = contig_names, plot.unplaced = FALSE)
-
-contig_plot <- mapping_contig(data, "LG05", region = c(1500000, 2500000), point.size = 1, color.sex.bias = FALSE)
+data <- load_mapping_results("mapping_results.tsv", contig_lengths_file_path = 'contig_lengths.tsv',
+                             contig_names_file_path = 'contig_names.tsv')
+#' contig_plot <- mapping_contig(data, "LG05", region = c(1500000, 2500000), point.size = 1, color.sex.bias = FALSE)
 }

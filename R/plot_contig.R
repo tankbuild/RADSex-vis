@@ -10,9 +10,11 @@
 #'
 #' @param contig Name of the contig to plot.
 #'
+#' @param region A vector of two integers specifying the region of the contig to plot (default NULL).
+#'
 #' @param chromosomes_names_file_path Path to a chromosomes names file, i.e. a tabulated file with name in the reference genome file as the first column and
-#' corresponding chromosome name (starting with "LG" or "chr", case unsensitive) as the second column. If the chromosomes names in the reference genome file
-#' already start with "LG" or "chr", there is no need for a chromosomes names file (default NULL).
+#' corresponding chromosome name as the second column. If the chromosomes names in the reference genome file start with "LG", "NC", or "CHR" (case unsensitive),
+#' chromosomes can be detected automatically (default NULL).
 #'
 #' @param output_file_path Path to the plot output file. If the output file is not specified, the circular plot will be plotted in the default device (default NULL).
 #'
@@ -23,8 +25,6 @@
 #' @param height Height of the output file in pixels (default 1400).
 #'
 #' @param res Resolution of the output file in \% (default 100).
-#'
-#' @param region A vector of two integers specifying the region of the contig to plot (default NULL).
 #'
 #' @param signif.threshold Significance threshold for association with sex (default 0.05).
 #'
@@ -62,9 +62,8 @@ plot_contig <- function(mapping_file_path, contig_lengths_file_path, contig, reg
     }
 
     # Load input files
-    contig_lengths <- load_contig_lengths(contig_lengths_file_path)
-    chromosomes_names <- load_contig_names(chromosomes_names_file_path)
-    mapping_data <- load_mapping_results(mapping_file_path, contig_lengths, contig_names = chromosomes_names, plot.unplaced = TRUE)
+    mapping_data <- load_mapping_results(mapping_file_path, contig_lengths_file_path,
+                                         contig_names_file_path = chromosomes_names_file_path, plot.unplaced = TRUE)
 
     # Generate plot
     contig_plot <- mapping_contig(mapping_data, contig = contig, region = region, title = title,

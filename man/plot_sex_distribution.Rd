@@ -5,10 +5,11 @@
 \title{Plot sex distribution}
 \usage{
 plot_sex_distribution(input_file_path, output_file_path = NULL,
-  title = NULL, width = 8, height = 7, dpi = 300, autoscale = FALSE,
-  show.significance = TRUE, significance.color = "red3",
-  significance.threshold = 0.05, color.scale.bins = c(0, 1, 5, 25, 100,
-  1000), color.scale.colors = c("white", "navyblue"))
+  title = NULL, width = 8, height = 7, dpi = 300,
+  autoscale = FALSE, show.significance = TRUE,
+  significance.color = "red3", significance.threshold = 0.05,
+  color.scale.bins = c(0, 1, 5, 25, 100, 1000),
+  color.scale.colors = c("white", "navyblue"))
 }
 \arguments{
 \item{input_file_path}{Path to a table of distribution of sequences between sexes.}

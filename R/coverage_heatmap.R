@@ -77,15 +77,10 @@ coverage_heatmap <- function(data, popmap = NULL, title = NULL,
         heatmap <- heatmap + ggplot2::theme(plot.title = ggplot2::element_blank())
     }
 
-    # Base position of dendrograms in the gtable
-    individual_dendrogram_top <- 7
-    sequence_dendrogram_top <- 4
-
     # Add individual names if specified
     if (individual.names) {
         heatmap <- heatmap + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, colour = sex_palette, size = 10, margin = ggplot2::margin(2.5,0,0,0)))
-        individual_dendrogram_top <- individual_dendrogram_top + 1  # Increment position of individual dendrogram in the gtable because one row was added.
-    }
+     }
 
     # Add sequence names if specified
     if (sequence.names) {
@@ -94,6 +89,22 @@ coverage_heatmap <- function(data, popmap = NULL, title = NULL,
 
     # Create plot grob of heatmap for the combined gtable
     combined <- ggplot2::ggplotGrob(heatmap)
+
+    # Base position of dendrograms in the gtable
+    individual_dendrogram_top <- combined$layout$b[which(combined$layout$name == "axis-b")]
+    individual_dendrogram_left <- combined$layout$l[which(combined$layout$name == "axis-b")]
+    sequence_dendrogram_top <- combined$layout$t[which(combined$layout$name == "axis-l")]
+    sequence_dendrogram_left <- combined$layout$l[which(combined$layout$name == "ylab-l")] - 1
+
+    # Add individual names if specified
+    if (individual.names) {
+        individual_dendrogram_top <- individual_dendrogram_top + 1  # Increment position of individual dendrogram in the gtable because one row was added.
+    }
+
+    # Add sequence names if specified
+    if (sequence.names) {
+       sequence_dendrogram_left <- sequence_dendrogram_left - 1
+    }
 
     if (individual.dendrogram == TRUE) {
 
@@ -110,9 +121,8 @@ coverage_heatmap <- function(data, popmap = NULL, title = NULL,
         combined <- gtable::gtable_add_rows(combined, grid::unit(0.1, "npc"), pos = individual_dendrogram_top)
         # Add the dendrogram to the combined gtable
         combined <- gtable::gtable_add_grob(combined, ggplot2::ggplotGrob(individual_dendrogram),
-                                            t = individual_dendrogram_top, l = 4, b = individual_dendrogram_top + 1, r = 5)
-
-        sequence_dendrogram_top <- sequence_dendrogram_top + 1
+                                            t = individual_dendrogram_top, l = individual_dendrogram_left,
+                                            b = individual_dendrogram_top + 1, r = individual_dendrogram_left + 1)
     }
 
     if (sequence.dendrogram) {
@@ -124,14 +134,19 @@ coverage_heatmap <- function(data, popmap = NULL, title = NULL,
                                                                    axis.title.x = ggplot2::element_blank()) +
                                                     ggplot2::coord_flip() +
                                                     ggplot2::scale_y_reverse(expand = c(0, 0.5)) +
-                                                    ggplot2::scale_x_continuous(expand = c(0, 0)))
+                                                    ggplot2::scale_x_continuous(expand = c(0, 0.12)))
 
         # Add a row to the combined gtable for the dendrogram
         combined <- gtable::gtable_add_cols(combined, grid::unit(0.04, "npc"), pos = 0)
         # Add the dendrogram to the combined gtable
         combined <- gtable::gtable_add_grob(combined, ggplot2::ggplotGrob(sequence_dendrogram),
-                                            t = sequence_dendrogram_top, l = 1, b = sequence_dendrogram_top + 1, r = 2)
+                                            t = sequence_dendrogram_top, l = sequence_dendrogram_left,
+                                            b = sequence_dendrogram_top, r = sequence_dendrogram_left + 1)
     }
 
     return(combined)
 }
+#
+#
+# grid::grid.newpage()
+# grid::grid.draw(combined)

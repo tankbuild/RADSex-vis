@@ -110,7 +110,7 @@ coverage_heatmap <- function(data, popmap = NULL, title = NULL,
 
         # Compute individual dendrogram object
         individual_dendrogram <- suppressMessages(ggdendro::ggdendrogram(data$individuals, labels = FALSE, leaf_labels = FALSE, theme_dendro = TRUE, rotate = FALSE) +
-                                                      ggplot2::theme(plot.margin = grid::unit(c(0.1, 0.01, 0, 0.01), 'npc'),
+                                                      ggplot2::theme(plot.margin = grid::unit(c(0.1, 0.01, 0, 0), 'npc'),
                                                                      axis.text.x = ggplot2::element_blank(),
                                                                      axis.text.y = ggplot2::element_blank(),
                                                                      axis.title.x = ggplot2::element_blank()) +
@@ -128,13 +128,13 @@ coverage_heatmap <- function(data, popmap = NULL, title = NULL,
     if (sequence.dendrogram) {
 
         sequence_dendrogram <- suppressMessages(ggdendro::ggdendrogram(data$sequences, labels = FALSE, leaf_labels = FALSE, theme_dendro = TRUE, rotate = FALSE) +
-                                                    ggplot2::theme(plot.margin = grid::unit(c(0.05, 0.1, 0.05, 0), 'npc'),
+                                                    ggplot2::theme(plot.margin = grid::unit(c(0.0, 0.1, 0.0, 0), 'npc'),
                                                                    axis.text.x = ggplot2::element_blank(),
                                                                    axis.text.y = ggplot2::element_blank(),
                                                                    axis.title.x = ggplot2::element_blank()) +
                                                     ggplot2::coord_flip() +
-                                                    ggplot2::scale_y_reverse(expand = c(0, 0.5)) +
-                                                    ggplot2::scale_x_continuous(expand = c(0, 0.12)))
+                                                    ggplot2::scale_y_reverse(expand = c(0, 0)) +
+                                                    ggplot2::scale_x_continuous(expand = c(0, 0.5)))
 
         # Add a row to the combined gtable for the dendrogram
         combined <- gtable::gtable_add_cols(combined, grid::unit(0.04, "npc"), pos = 0)

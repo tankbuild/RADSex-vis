@@ -69,6 +69,8 @@ load_mapping_results <- function(input_file_path, contig_lengths_file_path, cont
         # If plot.unplaced was not specified or unplaced contigs were not found, only plot data for LGs
         data <- data_lg
         data$Contig <- factor(data$Contig, levels = names(output$lengths$lg))
+        data$Contig_id <- data_lg$Contig
+        data$Original_position <- data_lg$Position
 
     }
 

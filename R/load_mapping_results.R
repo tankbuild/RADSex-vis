@@ -31,6 +31,9 @@ load_mapping_results <- function(input_file_path, contig_lengths_file_path, cont
     output$lengths <- load_contig_lengths(contig_lengths_file_path, contig_names = output$names, plot.unplaced = plot.unplaced)
 
     data <- suppressMessages(readr::read_delim(input_file_path, "\t", escape_double = FALSE, trim_ws = TRUE))
+    if (!is.logical(data$Signif)) {
+        data$Signif <- c("True" = TRUE, "False" = FALSE)[data$Signif]  # Convert to R boolean for old versions of readr
+    }
     data_lg <- subset(data, data$Contig %in% names(output$lengths$lg))
     data_unplaced <- subset(data, data$Contig %in% names(output$lengths$unplaced))
 

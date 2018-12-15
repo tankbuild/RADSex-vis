@@ -15,7 +15,9 @@
 load_sex_distribution_table <- function(input_file_path) {
 
     data <- suppressMessages(readr::read_delim(input_file_path, "\t", escape_double = FALSE, col_names = TRUE, trim_ws = TRUE))
-    data$Signif <- c("True" = TRUE, "False" = FALSE)[data$Signif]  # Convert to R boolean
+    if (!is.logical(data$Signif)) {
+        data$Signif <- c("True" = TRUE, "False" = FALSE)[data$Signif]  # Convert to R boolean for old versions of readr
+    }
     n_males <- max(data$Males)
     n_females <- max(data$Females)
 

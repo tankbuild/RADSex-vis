@@ -86,6 +86,8 @@ sex_distribution_heatmap <- function(data, title = NULL,
         heatmap <- heatmap +
             ggplot2::theme(plot.title = ggplot2::element_blank())
     }
+
+    return(heatmap)
 }
 
 

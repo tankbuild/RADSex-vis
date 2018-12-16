@@ -52,10 +52,9 @@ load_contig_lengths <- function(input_file_path, contig_names = NULL, plot.unpla
 
     }
 
-    output$unplaced <- sort(output$unplaced, decreasing = TRUE)  # Sort unplaced scaffolds by size
+    if (plot.unplaced & length(output$unplaced) > 0) {
 
-    if (plot.unplaced & !is.null(length(output$unplaced))) {
-
+        output$unplaced <- sort(output$unplaced, decreasing = TRUE)  # Sort unplaced scaffolds by size
         output$plot <- c(output$lg, "Unplaced" = sum(output$unplaced))
 
     } else {

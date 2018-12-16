@@ -6,7 +6,10 @@
 \usage{
 mapping_contig(data, contig, region = NULL, title = NULL,
   signif.threshold = 0.05, point.size = 1.5, color.sex.bias = TRUE,
-  sex.bias.palette = c("firebrick1", "grey10", "dodgerblue2"))
+  sex.bias.palette = c("firebrick1", "grey10", "dodgerblue2"),
+  association.color = "grey20", significance.line.color = "black",
+  significance.line.type = 2, significance.text.position = c(0.05,
+  0.05))
 }
 \arguments{
 \item{data}{A list of mapping results obtained with the \code{\link{load_mapping_results}} function.}
@@ -24,6 +27,14 @@ mapping_contig(data, contig, region = NULL, title = NULL,
 \item{color.sex.bias}{If TRUE, points on the sex-bias track will be colored according to sex.bias.palette (default TRUE).}
 
 \item{sex.bias.palette}{A vector of three colors defining the sex-bias track palette: female-biased, neutral, male-biased. (default c("firebrick1", "black", "dodgerblue2"))}
+
+\item{association.color}{Color of the points in association with sex plot (default "grey20").}
+
+\item{significance.line.color}{Color for significance line, set to NULL for no line (default "black").}
+
+\item{significance.line.type}{Linetype for the significance line, as usually defined in R (default 2).}
+
+\item{significance.text.position}{X and Y axis offset for the significance text, as fractions of total axis length (default c(0.05, 0.05)).}
 }
 \description{
 Generates a linear plot of RADSex mapping results for a specified contig. The resulting figure contains two plot: the top plot shows sex-bias against

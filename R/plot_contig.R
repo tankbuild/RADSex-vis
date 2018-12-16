@@ -34,6 +34,12 @@
 #'
 #' @param sex.bias.palette A vector of three colors defining the sex-bias track palette: female-biased, neutral, male-biased. (default c("firebrick1", "black", "dodgerblue2"))
 #'
+#' @param significance.line.color Color for significance line, set to NULL for no line (default "black").
+#'
+#' @param significance.line.type Linetype for the significance line, as usually defined in R (default 2).
+#'
+#' @param significance.text.position X and Y axis offset for the significance text, as fractions of total axis length (default c(0.05, 0.05)).
+#'
 #' @examples
 #'
 #' plot_contig("mapping_results.tsv", "contig_lengths.tsv", "LG01", region = c(10000000, 15000000),
@@ -44,7 +50,11 @@ plot_contig <- function(mapping_file_path, contig_lengths_file_path, contig, reg
                         chromosomes_names_file_path = NULL, title = NULL,
                         output_file_path = NULL, width = 12, height = 8, dpi = 300,
                         color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "grey10", "dodgerblue2"),
-                        signif.threshold = 0.05, point.size = 1.5) {
+                        association.color = "grey20",
+                        signif.threshold = 0.05, point.size = 1.5,
+                        significance.line.color = "black",
+                        significance.line.type = 2,
+                        significance.text.position = c(0.05, 0.05)) {
 
     # Check that all files exist and can be opened
     if (!file.exists(mapping_file_path)) {
@@ -68,12 +78,18 @@ plot_contig <- function(mapping_file_path, contig_lengths_file_path, contig, reg
     # Generate plot
     contig_plot <- mapping_contig(mapping_data, contig = contig, region = region, title = title,
                                   signif.threshold = signif.threshold, point.size = point.size,
-                                  color.sex.bias = color.sex.bias, sex.bias.palette = sex.bias.palette)
+                                  color.sex.bias = color.sex.bias, sex.bias.palette = sex.bias.palette,
+                                  association.color = association.color,
+                                  significance.line.color = significance.line.color,
+                                  significance.line.type = significance.line.type,
+                                  significance.text.position = significance.text.position)
 
     # Save the plot to output file if specified, otherwise display the plot
     if (!is.null(output_file_path)) {
-        ggplot2::ggsave(output_file_path, plot = contig_plot, width = width, height = height, dpi = dpi)
+        cowplot::ggsave(output_file_path, plot = contig_plot$combined, width = width, height = height, dpi = dpi)
     } else {
-        print(contig_plot)
+        print(contig_plot$combined)
     }
+
+    return(contig_plot)
 }

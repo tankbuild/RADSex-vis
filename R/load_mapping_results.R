@@ -67,6 +67,9 @@ load_mapping_results <- function(input_file_path, contig_lengths_file_path, cont
         data <- rbind(data_lg, data_unplaced)
         data$Contig <- factor(data$Contig, levels = c(names(output$lengths$lg), "Unplaced"))
 
+        # Add unplaced to output names used to name plot sectors
+        output$names <- c(output$names, "Unplaced"="Unplaced")
+
     } else {
 
         # If plot.unplaced was not specified or unplaced contigs were not found, only plot data for LGs

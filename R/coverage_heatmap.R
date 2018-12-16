@@ -58,7 +58,7 @@ coverage_heatmap <- function(data, popmap = NULL, title = NULL,
               axis.ticks.y = ggplot2::element_blank(),
               axis.title.y = ggplot2::element_blank(),
               axis.title.x = ggplot2::element_blank(),
-              plot.margin = ggplot2::margin(15, 15, 15, 30),
+              plot.margin = ggplot2::margin(5, 15, 15, 30),
               panel.border = ggplot2::element_rect(size = 0.75, color = "black"),
               legend.position = "right",
               legend.title = ggplot2::element_text(size = 14, face = "bold"),
@@ -146,7 +146,4 @@ coverage_heatmap <- function(data, popmap = NULL, title = NULL,
 
     return(combined)
 }
-#
-#
-# grid::grid.newpage()
-# grid::grid.draw(combined)
+

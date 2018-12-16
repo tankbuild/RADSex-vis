@@ -18,7 +18,15 @@
 #'
 #' @param color.sex.bias If TRUE, points on the sex-bias track will be colored according to sex.bias.palette (default TRUE).
 #'
+#' @param association.color Color of the points in association with sex plot (default "grey20").
+#'
 #' @param sex.bias.palette A vector of three colors defining the sex-bias track palette: female-biased, neutral, male-biased. (default c("firebrick1", "black", "dodgerblue2"))
+#'
+#' @param significance.line.color Color for significance line, set to NULL for no line (default "black").
+#'
+#' @param significance.line.type Linetype for the significance line, as usually defined in R (default 2).
+#'
+#' @param significance.text.position X and Y axis offset for the significance text, as fractions of total axis length (default c(0.05, 0.05)).
 #'
 #' @examples
 #' data <- load_mapping_results("mapping_results.tsv", contig_lengths_file_path = 'contig_lengths.tsv',
@@ -28,7 +36,11 @@
 
 mapping_contig <- function(data, contig, region = NULL, title = NULL,
                            signif.threshold = 0.05, point.size = 1.5,
-                           color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "grey10", "dodgerblue2")) {
+                           color.sex.bias = TRUE, sex.bias.palette = c("firebrick1", "grey10", "dodgerblue2"),
+                           association.color = "grey20",
+                           significance.line.color = "black",
+                           significance.line.type = 2,
+                           significance.text.position = c(0.05, 0.05)) {
 
     # Getting contig information
 
@@ -55,7 +67,7 @@ mapping_contig <- function(data, contig, region = NULL, title = NULL,
     }
 
     # Adjust significance threshold for bonferroni correction
-    signif.threshold <- -log(signif.threshold / dim(data$data)[1], 10)
+    signif_threshold <- -log(signif.threshold / dim(data$data)[1], 10)
 
     # Setting region to entire contig if region is NULL
     if (is.null(region)) {
@@ -102,12 +114,13 @@ mapping_contig <- function(data, contig, region = NULL, title = NULL,
     # Generate the bottome plot (probability of association with sex)
     h <- ggplot2::ggplot(contig_data, ggplot2::aes(x = Original_position, y = P)) +
         cowplot::theme_cowplot() +
-        ggplot2::geom_point(size = point.size, color = "grey20") +
+        ggplot2::geom_point(size = point.size, color = association.color) +
         ggplot2::scale_y_continuous(name = expression(paste('-log'['10'], '(p'['Association with sex'], ')', sep = "")),
                                     limits = c(0, max(contig_data$P, 1.25 * signif.threshold))) +
-        ggplot2::geom_hline(yintercept = signif.threshold, color = "red3", lty = 1, lwd = 1) +
-        ggplot2::annotate("text", x = region[1] + 0.05 * (region[2] - region[1]), y = signif.threshold + 0.075 * max(contig_data$P, 1.25 * signif.threshold),
-                          label = "p = 0.05", color = "red3", size = 5) +
+        ggplot2::geom_hline(yintercept = signif_threshold, color = significance.line.color, lty = significance.line.type, lwd = 0.5) +
+        ggplot2::annotate("text", x = significance.text.position[1] * max(contig_data$Original_position),
+                          y = signif_threshold + significance.text.position[2] * max(contig_data$P),
+                          label = paste("p = ", as.character(signif.threshold)), color = significance.line.color, size = 5) +
         x_scale
 
     # Combine the two plots
@@ -121,7 +134,8 @@ mapping_contig <- function(data, contig, region = NULL, title = NULL,
 
     }
 
-    return(combined)
+    output = list("combined" = combined, "sexbias" = g, "association" = h)
+    return(output)
 }
 
 

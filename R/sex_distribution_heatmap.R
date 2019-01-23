@@ -65,7 +65,7 @@ sex_distribution_heatmap <- function(data, title = NULL,
                        legend.key = ggplot2::element_rect(size = 0.5, color = "grey80"),
                        legend.position = "right",
                        legend.text.align = 0) +
-        ggplot2::scale_fill_manual(name = "Sequences", breaks = names(color_palette), values = color_palette, labels = names(color_palette), drop = FALSE) +
+        ggplot2::scale_fill_manual(name = "Markers", breaks = names(color_palette), values = color_palette, labels = names(color_palette), drop = FALSE) +
         ggplot2::scale_x_continuous(name = "Number of males", breaks = seq(0, data$n_males, 5), minor_breaks = seq(0, data$n_males, 1), expand = c(0, 0)) +
         ggplot2::scale_y_continuous(name = "Number of females", breaks = seq(0, data$n_females, 5), minor_breaks = seq(0, data$n_females, 1), expand = c(0, 0))
 

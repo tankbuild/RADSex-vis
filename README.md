@@ -12,7 +12,7 @@ The `radsex-vis` R package was developed to visualize results from the [RADsex p
 
 The *plot* functions are meant to be easy to use while still offering in-depth customization if desired. Other functions can be used by experienced R users who would like more control over the plotting steps.
 
-This package was developed for the PhyloSex project, which investigates sex determining factors in a wide range of fish species.
+This package was developed in the [LPGP](https://www6.rennes.inra.fr/lpgp/) lab from INRA, Rennes, France for the PhyloSex project, which investigates sex determining factors in a wide range of fish species.
 
 ## Requirements
 

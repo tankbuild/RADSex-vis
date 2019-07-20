@@ -86,7 +86,7 @@ plot_contig <- function(mapping_file_path, contig_lengths_file_path, contig, reg
 
     # Save the plot to output file if specified, otherwise display the plot
     if (!is.null(output_file_path)) {
-        cowplot::ggsave(output_file_path, plot = contig_plot$combined, width = width, height = height, dpi = dpi)
+        cowplot::ggsave2(output_file_path, plot = contig_plot$combined, width = width, height = height, dpi = dpi)
     } else {
         print(contig_plot$combined)
     }

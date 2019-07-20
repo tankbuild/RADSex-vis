@@ -76,7 +76,7 @@ plot_genome_manhattan <- function(mapping_file_path, contig_lengths_file_path, c
 
     # Save plot to output file if specified
     if (!is.null(output_file_path)) {
-        cowplot::ggsave(output_file_path, plot = manhattan_plot, width = width, height = height, dpi = dpi)
+        cowplot::ggsave2(output_file_path, plot = manhattan_plot, width = width, height = height, dpi = dpi)
     } else {
         print(manhattan_plot)
     }

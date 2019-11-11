@@ -98,7 +98,7 @@ plot_coverage <- function(input_file_path, output_file_path = NULL, popmap_file_
 
     # Save the plot to output file if specified, otherwise display the plot
     if (!is.null(output_file_path)) {
-        cowplot::ggsave(output_file_path, plot = heatmap, width = width, height = height, dpi = dpi)
+        cowplot::ggsave2(output_file_path, plot = heatmap, width = width, height = height, dpi = dpi)
     } else {
         grid::grid.newpage()
         grid::grid.draw(heatmap)
